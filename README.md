@@ -27,7 +27,7 @@ Neptune offers two different graph data models and query languages that simplify
 ### [Data Models and Query Languages](src/data-models-and-query-languages)
 
 
-<table><tr><td><a href="https://github.com/aws-samples/aws-dbs-refarch-graph/tree/master/src/data-models-and-query-languages"><img src="https://raw.githubusercontent.com/aws-samples/aws-dbs-refarch-graph/master/src/data-models-and-query-languages/thumbnail.png"/></a></td><td>
+<table><tr><td><a href="src/data-models-and-query-languages"><img src="src/data-models-and-query-languages/thumbnail.png"/></a></td><td>
 
 Neptune supports two different graph data models: the property graph data model, and the Resource Description Framework. Each data model has its own query language for creating and querying graph data. For a property graph, you create and query data using Apache Tinkerpop Gremlin, an open source query language supported by several other graph databases. For an RDF graph you create and query data using SPARQL, a graph pattern matching language standardized by the W3C.
 
