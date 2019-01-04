@@ -33,6 +33,15 @@ Neptune supports two different graph data models: the property graph data model,
 
 </td></tr></table>
 
+### [Graph Data Modelling](src/graph-data-modelling)
+
+
+<table><tr><td><a href="src/graph-data-modelling"><img src="src/graph-data-modelling/thumbnail.png"/></a></td><td>
+
+When you build a graph database application you will have to design and implement an application graph data model, together with graph queries that address that model. The application graph data model expresses the application domain; the queries answer the questions you would have to pose to that domain in order to satisfy your application use cases. This section describes how to create an application graph model. 
+
+</td></tr></table>
+
 
 ## License Summary
 
