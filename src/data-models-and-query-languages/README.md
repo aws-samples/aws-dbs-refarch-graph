@@ -27,7 +27,7 @@ g.V('p-1').out('FOLLOWS').valueMap('firstName', 'lastName')
   * [Apache TinkerPop Documentation](http://tinkerpop.apache.org/docs/current/reference/)
   * [PRACTICAL GREMLIN: An Apache TinkerPop Tutorial](http://kelvinlawrence.net/book/Gremlin-Graph-Guide.html)
 
-##RDF Graph and SPARQL
+## RDF Graph and SPARQL
 
 RDF encodes resource descriptions in the form of subject-predicate-object triples. In contrast to the property graph model, which 'chunks' data into record-like vertices and edges with attached properties, RDF creates a more fine-grained representation of your domain.
 
@@ -48,7 +48,6 @@ SELECT ?firstName ?lastName WHERE {
     ?p s:lastName ?lastName
 }
 ```
-
 
 ## Choosing a Data Model and Query Language for Your Workload
 
