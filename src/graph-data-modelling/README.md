@@ -56,7 +56,7 @@ If you need to model bi-directional relationships, in which relationship directi
 
 If you are using RDF, you will have to add pairs of predicates:
 
-````
+```
 PREFIX j: <http://www.example.com/jobs#>
 
 INSERT
