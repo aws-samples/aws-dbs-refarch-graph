@@ -61,6 +61,14 @@ Amazon Neptune only allows connections from clients located in the same VPC as t
 
 </td></tr></table>
 
+### [Accessing Amazon Neptune from AWS Lambda Functions](src/accessing-from-aws-lambda)
+
+<table><tr><td><a href="src/accessing-from-aws-lambda"><img src="src/accessing-from-aws-lambda/thumbnail.png"/></a></td><td>
+
+If you are building an application or service on Amazon Neptune, you may choose to expose an API to your clients, rather than offer direct access to the database. AWS Lambda allows you to build and run application logic without provisioning or managing servers. This architecture shows you how to connect AWS Lambda functions to Amazon Neptune.
+
+</td></tr></table>
+
 
 ## License Summary
 
