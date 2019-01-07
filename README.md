@@ -42,6 +42,15 @@ When you build a graph database application you will have to design and implemen
 
 </td></tr></table>
 
+### [Converting Other Data Models to a Graph Model](src/converting-to-graph)
+
+
+<table><tr><td><a href="src/converting-to-graph"><img src="src/converting-to-graph/thumbnail.png"/></a></td><td>
+
+Sometimes you need to take data from another data technology and ingest it into a graph database prior to undertaking any explicit application-specific graph data modelling. In these circumstances you can apply a number of 'mechanical' transformations that yield a naive graph model. This section describes how to map relational, document and key-value data models to a graph model.
+
+</td></tr></table>
+
 
 ## License Summary
 
