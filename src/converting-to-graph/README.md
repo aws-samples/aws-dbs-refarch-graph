@@ -4,7 +4,11 @@ As described in [Overview of the Design Process](../graph-data-modelling#overvie
 
 However, you may sometimes need to take data from another data technology and ingest it into a graph database prior to undertaking any explicit application-specific graph data modelling. In these circumstances you can apply a number of 'mechanical' transformations that yield a naive graph model. This model will not necessarily be optimised for specific use cases and queries, but it can provide the basis for exploration and the iterative development of an application graph data model.
 
-## Converting a Relational Data Models to a Graph Model
+  * [Converting a Relational Data Model to a Graph Model](#converting-a-relational-data-model-to-a-graph-model)
+  * [Converting a Document-Oriented Data Model to a Graph Model](#converting-a-document-oriented-data-model-to-a-graph-model)
+  * [Converting a Key-Value Data Model to a Graph Model](#converting-a-key-value-data-model-to-a-graph-model)
+
+## Converting a Relational Data Model to a Graph Model
 
 ### Tables
 
@@ -146,13 +150,13 @@ INSERT
 WHERE {}
 ```
 
-## Converting a Document-Oriented Data Models to a Graph Model
+## Converting a Document-Oriented Data Model to a Graph Model
 
 Document-oriented databases store semi- or variably-structured documents, usually encoded as JSON or XML. 
 
 Nested Structures
 
-Documents often comprise a nested structure containing all the information necessary to satisfy a business operation. Such self-contained islands of information are sometimes called aggregates (https://martinfowler.com/bliki/DDD_Aggregate.html). An order document, for example, may contain multiple line items together with the billing and delivery addresses necessary to satisfy payment and fulfilment processes. 
+Documents often comprise a nested structure containing all the information necessary to satisfy a business operation. Such self-contained islands of information are sometimes called [aggregates](https://martinfowler.com/bliki/DDD_Aggregate.html). An order document, for example, may contain multiple line items together with the billing and delivery addresses necessary to satisfy payment and fulfilment processes. 
 
 Document-oriented data models favour redundancy over explicit joins. Continuing the order example, if a customer places several orders, each order document will contain its own billing and delivery addresses so that it can be processed as a single unit without having to execute joins in the application layer.
 
@@ -204,7 +208,7 @@ WHERE {}
 
 Some document-oriented application models join documents across collections by including the IDs of external documents in a field in the document to which they are to be joined. Treat these scenarios as you would foreign keys in a relational schema.
 
-## Converting a Key-Value Data Models to a Graph Model
+## Converting a Key-Value Data Model to a Graph Model
 
 TODO
 
