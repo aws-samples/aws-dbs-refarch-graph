@@ -53,7 +53,7 @@ Sometimes you need to take data from another data technology and ingest it into 
 
 ## Deployment Architectures
 
-### Connecting to Amazon Neptune from Clients Outside the Neptune VPC
+### [Connecting to Amazon Neptune from Clients Outside the Neptune VPC](src/connecting-using-a-load-balancer)
 
 <table><tr><td><a href="src/connecting-using-a-load-balancer"><img src="src/connecting-using-a-load-balancer/thumbnail.png"/></a></td><td>
 

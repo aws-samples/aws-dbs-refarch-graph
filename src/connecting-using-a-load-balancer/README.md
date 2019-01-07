@@ -2,8 +2,8 @@
 
 Amazon Neptune only allows connections from clients located in the same VPC as the Neptune cluster. If you want to connect from outside the Neptune VPC, you can use a load balancer. This architecture shows how you can use either a Network Load Balancer or an Application Load Balancer to connect to Neptune.
 
-  * [Connecting to Amazon Neptune from clients outside the Neptune VPC using AWS Network Load Balancer](#converting-a-relational-data-model-to-a-graph-model)
-  * [Connecting to Amazon Neptune from clients outside the Neptune VPC using AWS Application Load Balancer](#converting-a-document-oriented-data-model-to-a-graph-model)
+  * [Connecting to Amazon Neptune from clients outside the Neptune VPC using AWS Network Load Balancer](#connecting-to-amazon-neptune-from-clients-outside-the-neptune-vpc-using-aws-network-load-balancer)
+  * [Connecting to Amazon Neptune from clients outside the Neptune VPC using AWS Application Load Balancer](#connecting-to-amazon-neptune-from-clients-outside-the-neptune-vpc-using-aws-application-load-balancer)
   
 ## Connecting to Amazon Neptune from clients outside the Neptune VPC using AWS Network Load Balancer
 
