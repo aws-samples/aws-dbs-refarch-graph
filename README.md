@@ -51,6 +51,16 @@ Sometimes you need to take data from another data technology and ingest it into 
 
 </td></tr></table>
 
+## Deployment Architectures
+
+### Connecting to Amazon Neptune from Clients Outside the Neptune VPC
+
+<table><tr><td><a href="src/connecting-using-a-load-balancer"><img src="src/connecting-using-a-load-balancer/thumbnail.png"/></a></td><td>
+
+Amazon Neptune only allows connections from clients located in the same VPC as the Neptune cluster. If you want to connect from outside the Neptune VPC, you can use a load balancer. This architecture shows how you can use either a Network Load Balancer or an Application Load Balancer to connect to Neptune.
+
+</td></tr></table>
+
 
 ## License Summary
 
