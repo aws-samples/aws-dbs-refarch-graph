@@ -222,7 +222,7 @@ Much like document-oriented databases, key-value workloads are typically aggrega
 Whilst ostensibly confirming to a very simple data model, many key-value datasets contain implicit structure and connectedness:
 
   * Both keys and values can be overloaded with structure: a key may comprise a hierarchical prefix, a value a delimited set of tags, for example. Applications that understand a dataset's record semantics can parse keys and values to infer additional structural information.
-  * Redundancy across records is common. Field values or families of field values the reoccur in multiple records may refer to a single instance of an entity in the application domain.
+  * Redundancy across records is common. Field values or families of field values that reoccur in multiple records may refer to a single instance of an entity in the application domain.
   * Individual field values may comprise nested structures – JSON documents, for example.
 
 Given these features of key-value data models, there's often a lot of graph-like structure that can be teased out of a key-value dataset. You'll need to review the fields and field datatypes for the records in your dataset, and the application semantics applied to keys and values, in order to determine what kind of connected structure is implicit in the dataset.
@@ -232,13 +232,13 @@ Given these features of key-value data models, there's often a lot of graph-like
   1. Convert each record to a vertex in the graph model. Use the collection or table name in the key-value store to type or label the vertex in the graph.
   2. Parse out any application structure present in the key, and create additional vertices and edges to represent this structure. Use any remaining key data to generate the vertex ID.
   3. Parse out any application structure present in individual fields, and create additional vertices and edges to represent this structure.
-  4. Identify nested field values and treat them as documents, applying the same modelling techniques you use to convert a document-oriented data model to a graph model.
+  4. Identify nested field values and treat them as documents, applying the same modelling techniques you use to [convert a document-oriented data model to a graph model](#converting-a-document-oriented-data-model-to-a-graph-model).
   5. Identify frequently reoccurring fields, families of fields, and field values across records, and consider creating new vertices to represent the entities implied by these fields.
   6. Map remaining record fields to vertex properties.
 
 ### Example 
 
-In the following example the `city:dept` field is overloaded with hierarchical information representing geographic and organizational structure. When converting to a graph model, we create additional vertices to represent states, cities and departments, and connect these vertices with edges in line with the connectedness implicit in th `city:dept` familiy of values.
+In the following example the `city:dept` field is overloaded with hierarchical information representing geographic and organizational structure. When converting to a graph model, we create additional vertices to represent states, cities and departments, and connect these vertices with edges in line with the connectedness implicit in the `city:dept` familiy of values.
 
 ![Key-Value to Graph](key-value-2-graph.png)
 
