@@ -224,6 +224,7 @@ Whilst ostensibly confirming to a very simple data model, many key-value dataset
   * Both keys and values can be overloaded with structure: a key may comprise a hierarchical prefix, a value a delimited set of tags, for example. Applications that understand a dataset's record semantics can parse keys and values to infer additional structural information.
   * Redundancy across records is common. Field values or families of field values that reoccur in multiple records may refer to a single instance of an entity in the application domain.
   * Individual field values may comprise nested structures – JSON documents, for example.
+  * Some field values may act as foreign keys that refer to the IDs of other records, or even other data sources.
 
 Given these features of key-value data models, there's often a lot of graph-like structure that can be teased out of a key-value dataset. You'll need to review the fields and field datatypes for the records in your dataset, and the application semantics applied to keys and values, in order to determine what kind of connected structure is implicit in the dataset.
 
@@ -233,8 +234,9 @@ Given these features of key-value data models, there's often a lot of graph-like
   2. Parse out any application structure present in the key, and create additional vertices and edges to represent this structure. Use any remaining key data to generate the vertex ID.
   3. Parse out any application structure present in individual fields, and create additional vertices and edges to represent this structure.
   4. Identify nested field values and treat them as documents, applying the same modelling techniques you use to [convert a document-oriented data model to a graph model](#converting-a-document-oriented-data-model-to-a-graph-model).
-  5. Identify frequently reoccurring fields, families of fields, and field values across records, and consider creating new vertices to represent the entities implied by these fields.
-  6. Map remaining record fields to vertex properties.
+  5. Identify fields that act as foreign keys, and add edges to join the vertices at either end of the relation. Use the field name to label the edge.
+  6. Identify frequently reoccurring fields, families of fields, and field values across records, and consider creating new vertices to represent the entities implied by these fields.
+  7. Map remaining record fields to vertex properties.
 
 ### Example 
 
