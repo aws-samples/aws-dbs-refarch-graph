@@ -69,6 +69,14 @@ If you are building an application or service on Amazon Neptune, you may choose 
 
 </td></tr></table>
 
+### [Writing to Amazon Neptune from an Amazon Kinesis Data Stream](src/writing-from-amazon-kinesis-data-streams)
+
+<table><tr><td><a href="src/writing-from-amazon-kinesis-data-streams"><img src="src/writing-from-amazon-kinesis-data-streams/thumbnail.png"/></a></td><td>
+
+When using Amazon Neptune in high write throughput scenarios, you can improve the reliability, performance and scalability of your application by sending writes from your client to an Amazon Kinsesis Data Stream. An AWS Lambda function  polls the stream and issues batches of writes to the underlying Neptune database.
+
+</td></tr></table>
+
 
 ## License Summary
 

@@ -22,3 +22,8 @@ This architecture shows you how to connect AWS Lambda functions to Amazon Neptun
 
   * If you require external internet access for your function, configure your Lambda security group to allow outbound connections and route outbound internet traffic via a [NAT gateway attached to your VPC](https://aws.amazon.com/premiumsupport/knowledge-center/internet-access-lambda-function/).
   * Lambda functions that are configured to run inside a VPC incurs an additional ENI start-up penalty. This means address resolution may be delayed when trying to connect to network resources. As an alternative to running inside a VPC, you can run your Lambda functions outside your VPC and connect to the Neptune endpoints via a load balancer. If you do this, you should consider enabling [IAM database authentication](https://docs.aws.amazon.com/neptune/latest/userguide/iam-auth.html) on your Neptune cluster, and configuring the Lambda execution role with an IAM policy that grants access to the database. 
+  * If your Lambda functions connect to Neptune using WebSockets, ensure they close their connections at the end of each invocation. While this adds some additional latency opening a connection per function invocation, it avoids your functions exceeding the Neptune WebSocket connection limit of 60,000 connections.
+  
+### Learn More
+
+  * Find recommendations for using Amazon Neptune and maximizing performance in [Best Practices](https://docs.aws.amazon.com/neptune/latest/userguide/best-practices.html)

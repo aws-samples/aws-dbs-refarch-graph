@@ -219,7 +219,7 @@ Much like document-oriented databases, key-value workloads are typically aggrega
   
 ### Implicit Structure
   
-Whilst ostensibly confirming to a very simple data model, many key-value datasets contain implicit structure and connectedness:
+Whilst ostensibly conforming to a very simple data model, many key-value datasets contain implicit structure and connectedness:
 
   * Both keys and values can be overloaded with structure: a key may comprise a hierarchical prefix, a value a delimited set of tags, for example. Applications that understand a dataset's record semantics can parse keys and values to infer additional structural information.
   * Redundancy across records is common. Field values or families of field values that reoccur in multiple records may refer to a single instance of an entity in the application domain.
