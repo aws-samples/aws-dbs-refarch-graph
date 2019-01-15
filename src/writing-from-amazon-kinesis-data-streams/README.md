@@ -25,3 +25,7 @@ When using Amazon Neptune in high write throughput scenarios, you can improve th
   * A shard is a throughput unit of Amazon Kinesis Data Streams, and the service is charged on [Shard Hours and PUT Payload Units](https://aws.amazon.com/kinesis/data-streams/pricing/). Increasing the number of shards in order to increase concurrency and throughput will therefore increase costs. 
   * Alternatively, at the expense of additional engineering effort, you can increase concurrency using the threading model particular to your Lambda runtime.
   * Records in a Kinesis Data Stream are ordered per shard based on insert time. However, there is no total ordering of records within a stream with multiple shards. When using this architecture, either ensure that logical writes are wholly independent of one another such that they can be executed out of insert order, or direct dependent writes to the same shard using partition keys to group data by shard. If you are processing batches in a serial fashion within a Lambda function, you can maintain the insert order imposed by the shard with which the function is associated. If, however, you implement your own concurrency inside a Lambda fucntion, writes to Neptune can end up being ordered differently fron the order imposed by the shard.
+  
+### Learn More
+
+  * Download or run an example of [Writing to Amazon Neptune from an Amazon Kinesis Data Stream](https://github.com/aws-samples/amazon-neptune-samples/tree/master/gremlin/stream-2-neptune)

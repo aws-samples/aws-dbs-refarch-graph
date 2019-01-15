@@ -26,4 +26,4 @@ This architecture shows you how to connect AWS Lambda functions to Amazon Neptun
   
 ### Learn More
 
-  * Find recommendations for using Amazon Neptune and maximizing performance in [Best Practices](https://docs.aws.amazon.com/neptune/latest/userguide/best-practices.html)
+  * Find recommendations for using Amazon Neptune and maximizing performance in [Best Practices: Getting the Most Out of Neptune](https://docs.aws.amazon.com/neptune/latest/userguide/best-practices.html)
