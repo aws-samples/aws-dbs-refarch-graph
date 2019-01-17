@@ -1,0 +1,18 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+table, th, td {
+   border: 0px;
+   vertical-align: top;
+}
+img { 
+   border:0px;
+}
+.inner {
+    position: relative;
+    max-width: 80%;
+    padding: 20px 10px;
+    margin: 0 auto;
+}
