@@ -2,9 +2,9 @@ __Graph Database__ workloads are operational and business intelligence database 
 
 Example graph database workloads include:
 
-  * __Social networking__ People and the social relations that connect them: friendship, follower, and professional relationships. Social networks can be used to identify transitive relations that connect individuals and degrees of separation, rank influential or important individuals and trace paths of influence, detect communities and the relationships and attributes that establish membership of a community, and predict the likelihood of new relationships emerging between individuals. 
+  * __Social networking__ People and the social relations that connect them: friendship, follower, and professional relationships. Social networks can be used to identify the transitive relations that connect individuals and calculate degrees of separation, rank influential or important individuals and trace paths of influence, detect communities and the relationships and attributes that establish membership of a community, and predict the likelihood of new relationships emerging between individuals. 
 
-  * __Recommendations__ Often combined with some social networking data, recommendations engines provide a predictive capability based on the existing connections in the network. For example, by capturing details of users, the things in which they are interested, and the things they have purchased, you can offer per-user recommendations: "people who have purchased things you have purchased and/or who share your interests have also purchased X and/or are also interested in Y."
+  * __Recommendations__ Often combined with some social networking data, recommendations engines provide a predictive capability based on the existing connections in the network. For example, by capturing details of users, the things or topics they have expresed an interest in, and the things they have purchased, you can offer per-user recommendations: "people who have purchased things you have purchased and/or who share your interests have also purchased X and/or are also interested in Y."
 
   * __Knowledge graphs__ In a general sense, a knowledge graph is a network or connected representation of things relevant to a specific domain or organization. Examples include a movie-based knowledge graph containing details of movies, the actors who have appeared in these movies, and the production staff members who have worked on them; an art graph, containing details of museums, the works of art displayed in each museum, and the artists who have created these works of art; and an organizational knowledge graph containing details of employees, their roles, the departments to which they belong, and the offices where they work.
 
@@ -18,7 +18,7 @@ You may have a graph workload if you need to:
 
   * model and navigate sophisticated or complex structures,
   * quickly and flexibly link or connect items,
-  * answer questions based on an understanding of how things are connected – both the semantics of the relationships between entities and their various strengths, weights or qualities.
+  * answer questions based on an understanding of how things are connected – both the semantics of the relationships between entities and the various strengths, weights or qualities of these relationships.
  
 Key characteristics of a graph database workload include:
 
