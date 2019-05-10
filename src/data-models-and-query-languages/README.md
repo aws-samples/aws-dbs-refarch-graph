@@ -8,9 +8,21 @@ Neptune supports two different graph data models: the [property graph](https://e
 
 The property graph data model represents graph data as vertices and edges (sometimes called nodes and relationships). You typically use vertices to represent entities in your domain, edges to represent the relationships between these entities. Every edge must have a name, or label, and a direction – that is, a start vertex and an end vertex. Neptune's property graph model doesn't allow dangling edges.
 
+### Properties
+
 You can attach one or more _properties_ to each of the vertices and edges in your graph. Typically, you use vertex properties to represent the attributes of entities in your domain, and edge properties to represent the strength, weight or quality of a relationship. You can also use properties to represent metadata – timestamps, access control lists, etc.
 
-Besides adding properties to the elements in your graph, you can also attach labels to both the vertices and edges. You must attach exactly one label to each edge in your graph. An edge's label expresses the semantics of the relationship represented by the edge. Edge labels are mandatory, whereas vertex labels are optional. If you so wish, you can attach one or more labels to each vertex in your graph. Vertex labels allow you to tag, type and group vertices. 
+### IDs
+
+Every vertex in the graph must have a unique ID, as must every edge. Because every edge has its own identity, you can create multiple edges connecting the same pair of vertices.
+
+> Some graph databases allow you to assign your own IDs to vertices and edges. Others automatically create IDs for you. Neptune allows you to supply your own IDs when creating vertices and edges: if you don't assign your own ID to an element, Neptune will create a string-based UUID for you. All vertex IDs must be unique, and all edge IDs must be unique. However, Neptune does allow a vertex and an edge to have the same ID. 
+
+### Labels
+
+Besides adding properties to the elements in your graph, you can also attach labels to both the vertices and edges. Edge labels are mandatory: you must attach exactly one label to each edge in your graph. An edge's label expresses the semantics of the relationship represented by the edge. Vertex labels are optional: you can attach zero, one or more labels to each vertex in your graph. Vertex labels allow you to tag, type and group vertices. 
+
+### Example
 
 In the following diagram we see three vertices. Each vertex is labelled `User`, and has an `id`, and `firstName` and `lastName` properties. The vertices are connected by edges labelled `FOLLOWS`.
 
