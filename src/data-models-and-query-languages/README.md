@@ -16,7 +16,7 @@ You can attach one or more _properties_ to each of the vertices and edges in you
 
 ### IDs
 
-Every vertex in the graph must have a unique ID, as must every edge. Because every edge has its own identity, you can create multiple edges connecting the same pair of vertices.
+Every vertex and every edge in the graph must have a unique ID. Because every edge has its own identity, you can create multiple edges connecting the same pair of vertices.
 
 > Some graph databases allow you to assign your own IDs to vertices and edges. Others automatically create IDs for you. Neptune allows you to supply your own IDs when creating vertices and edges: if you don't assign your own ID to an element, Neptune will create a string-based UUID for you. All vertex IDs must be unique, and all edge IDs must be unique. However, Neptune does allow a vertex and an edge to have the same ID. 
 
