@@ -6,7 +6,9 @@ Neptune supports two different graph data models: the [property graph](https://e
 
 ## Property Graph and Gremlin
 
-The property graph data model represents graph data as vertices and edges (sometimes called nodes and relationships). You typically use vertices to represent entities in your domain, edges to represent the relationships between these entities. Every edge must have a name, or label, and a direction – that is, a start vertex and an end vertex. Neptune's property graph model doesn't allow dangling edges.
+### Vertices and Edges
+
+The property graph data model represents graph data as _vertices_ and _edges_ (sometimes called nodes and relationships). You typically use vertices to represent entities in your domain, edges to represent the relationships between these entities. Every edge must have a name, or label, and a direction – that is, a start vertex and an end vertex. Neptune's property graph model doesn't allow dangling edges.
 
 ### Properties
 
