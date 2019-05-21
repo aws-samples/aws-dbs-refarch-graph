@@ -22,7 +22,7 @@ Every vertex and every edge in the graph must have a unique ID. Because every ed
 
 ### Labels
 
-Besides adding properties to the elements in your graph, you can also attach labels to both the vertices and edges. Edge labels are mandatory: you must attach exactly one label to each edge in your graph. An edge's label expresses the semantics of the relationship represented by the edge. Vertex labels are optional: you can attach zero, one or more labels to each vertex in your graph. Vertex labels allow you to tag, type and group vertices. 
+As well as adding properties to the elements in your graph, you can also attach labels to both the vertices and edges. Edge labels are mandatory: you must attach exactly one label to each edge in your graph. An edge's label expresses the semantics of the relationship represented by the edge. Vertex labels are optional: you can attach zero, one or many labels to each vertex in your graph. Vertex labels allow you to tag, type and group vertices. 
 
 ### Example
 
@@ -45,7 +45,7 @@ g.V('p-1').out('FOLLOWS').valueMap('firstName', 'lastName')
 
 RDF encodes resource descriptions in the form of subject-predicate-object triples. In contrast to the property graph model, which 'chunks' data into record-like vertices and edges with attached properties, RDF creates a more fine-grained representation of your domain.
 
-The following diagram shows the same information as presented in the property graph above, but this time encoded as RDF.
+The following diagram shows the same information as the property graph above, but this time encoded as RDF.
 
 ![RDF](rdf.png)
 
