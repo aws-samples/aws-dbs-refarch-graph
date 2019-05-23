@@ -53,8 +53,8 @@ As well as using vertex properties to model entity attributes, you can also use 
 
 Model an attribute as its own vertex when:
 
- - the attribute value is a complex value type
- - and/or the attribute value will be used to relate entities at query time.
+ - the attribute value is a complex value type _and/or_
+ - the attribute value will be used to relate entities at query time.
 
 #### Complex value types
 
@@ -66,6 +66,10 @@ With some applications, you may want to attach metadata such as a timestamp or a
   
 #### Relating entities through their attributes at query time
 
-If an attribute value will be used to create paths through the network that relate entities at query time, consider pulling it out into its own vertex. _Social security number_ is a good example. Normally, we'd model social security number by attaching a `socialSecurityNumber` property to a `User` vertex. But in a fraud detection graph, where individuals in a fraud ring share bits of identity information, things are more complicated. Here we might have a connected data query of the form: _Given individual X, can we find other people in the graph who have opened accounts using the same security number as person X?_ In other words, we have a starting point, person X, but need thereafter to find other people who have something in common with person X based on a specific attribute – the social security number used by person X. Note that this connected data query is very different from the kind of query that asks: _Find everyone who has used social security number '123-45-6789'._ This latter query could be satisfied simply by filtering `User` vertices based on a `socialSecurityNumber` value that is known to us at the time the query is formulated. It's the equivalent of a simple key-value lookup. In the connected data query, in contrast, we don't necessarily know the social security number at query time. What we do know is how to identify person X. Having found person X, the connected data query then needs to find other people who are connected to X by way of some shared attribute – the social security number.
+If an attribute value will be used to create paths through the network that relate entities at query time, consider pulling it out into its own vertex. 
+
+_Social security number_ is a good example. Normally, we'd model social security number by attaching a `socialSecurityNumber` property to a `User` vertex. But in a fraud detection graph, where individuals in a fraud ring share bits of identity information, things are more complicated. Here we might have a connected data query of the form: _Given individual X, can we find other people in the graph who have opened accounts using the same security number as person X?_ In other words, we have a starting point, person X, but need thereafter to find other people who have something in common with person X based on a specific attribute – the social security number used by person X. 
+
+Note that this connected data query is very different from the kind of query that asks: _Find everyone who has used social security number '123-45-6789'._ This latter query could be satisfied simply by filtering `User` vertices based on a `socialSecurityNumber` value that is known to us at the time the query is formulated. It's the equivalent of a simple key-value lookup. In the connected data query, in contrast, we don't necessarily know the social security number at query time. What we do know is how to identify person X. Having found person X, the connected data query then needs to find other people who are connected to X by way of some shared attribute – the social security number.
 
 If you are considering modelling an attribute as its own vertex in order to facilitate connected data queries, apply good judgement based on your understanding of the domain. The new vertex should probably represent a significant concept in the domain. In the fraud detection example, bits of identity information are meaningful domain entities that can exist independent of the users with which they are associated. In other domains, the same might not be true of these same attributes.
