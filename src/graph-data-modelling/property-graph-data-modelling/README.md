@@ -1,5 +1,14 @@
 # Property Graph Data Modelling
 
+  - An Application Graph Data Model
+  - Vertices
+    - Vertex IDs
+    - Vertex labels
+    - Vertex properties
+    - When should I model an attribute as a property and when should I pull it out into its own vertex?
+      - Complex value types
+      - Relating entities through their attributes at query time
+
 ## An Application Graph Data Model
 
 An application-specific property graph data model describes how your graph data is structured to express your domain and make it easy and efficient to query for your most important use cases: 
