@@ -2,7 +2,7 @@
 
 ## An Application Graph Data Model
 
-An application-specific property graph data model describes how your graph data is structured in ways that express your domain and make it easy and efficient to query for your most important use cases: 
+An application-specific property graph data model describes how your graph data is structured to express your domain and make it easy and efficient to query for your most important use cases: 
 
   - What types of vertices do you have in your graph, as represented by vertex labels? 
   - What properties do you attach to each type of vertex? 
