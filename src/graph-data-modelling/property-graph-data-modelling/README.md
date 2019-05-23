@@ -1,13 +1,13 @@
 # Property Graph Data Modelling
 
-  - An Application Graph Data Model
-  - Vertices
-    - Vertex IDs
-    - Vertex labels
-    - Vertex properties
-    - When should I model an attribute as a property and when should I pull it out into its own vertex?
-      - Complex value types
-      - Relating entities through their attributes at query time
+  - [An Application Graph Data Model](#an-application-graph-data-model)
+  - [Vertices](#vertices)
+    - [Vertex IDs](#vertex-ids)
+    - [Vertex labels](#vertex-labels)
+    - [Vertex properties](#vertex-properties)
+    - [When should I model an attribute as a property and when should I pull it out into its own vertex?](#when-should-i-model-an-attribute-as-a-property-and-when-should-i-pull-it-out-into-its-own-vertex)
+      - [Complex value types](#complex-value-types)
+      - [Relating entities through their attributes at query time](#relating-entities-through-their-attributes-at-query-time)
 
 ## An Application Graph Data Model
 
