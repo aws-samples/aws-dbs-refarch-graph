@@ -5,9 +5,16 @@
     - [Vertex IDs](#vertex-ids)
     - [Vertex labels](#vertex-labels)
     - [Vertex properties](#vertex-properties)
+    - [When should I model an attribute as a property versus a label?](#when-should-i-model-an-attribute-as-a-property-versus-a-label)
     - [When should I model an attribute as a property and when should I pull it out into its own vertex?](#when-should-i-model-an-attribute-as-a-property-and-when-should-i-pull-it-out-into-its-own-vertex)
       - [Complex value types](#complex-value-types)
       - [Relating entities through their attributes at query time](#relating-entities-through-their-attributes-at-query-time)
+  - [Edges](#edges)
+    - [Edge IDs](#edge-ids)
+    - [Edge labels](#edge-labels)
+    - [Edge properties](#edge-properties)
+  - [The Hub-and-Spoke Pattern](#the-hub-and-spoke-pattern)
+    - [When to use hub-and-spoke](#when-to-use-hub-and-spoke)
 
 ## An Application Graph Data Model
 
@@ -44,7 +51,7 @@ Some graph databases automatically assign IDs to vertices when they are created,
 
 Use a vertex label to indicate the entity type or the role that the vertex plays in your dataset. _People, users, customers, products, jobs, policies_: in the singular, _person, user, customer, product, job_ and _policy_ – all good candidate vertex labels.
 
-Try to limit ach vertex to having just one label. Entities can sometimes play multiple roles in your dataset: if that's the case, it's fine to attach multiple labels to a vertex. But avoid using labels as flags or enumerated tags that group entities of a particular type. Better to use a property to perform this partitioning. For example, if you wanted to version vertices in your graph, it would be best to do this by attaching a `version` property containing a numeric property value to each vertex, rather than labelling each vertex `v1`, `v2`, `v3`, etc.
+Try to limit each vertex to having just one label. Entities can sometimes play multiple roles in your dataset: if that's the case, it's fine to attach multiple labels to a vertex. But avoid using labels as flags or enumerated tags that group entities of a particular type. Better to use a property to perform this partitioning. For example, if you wanted to version vertices in your graph, it would be best to do this by attaching a `version` property containing a numeric property value to each vertex, rather than labelling each vertex `v1`, `v2`, `v3`, etc.
 
 ### Vertex properties
 
@@ -58,11 +65,16 @@ As well as using vertex properties to model entity attributes, you can also use 
 >  - If there's no requirement to filter the list's contents at query time, you can store the list as a delimited string representation. To modify the contents of the list, you'll need to implement some logic in your application to retrieve the current representation of the list, parse it into a list type to which you can apply any necessary modifications, and then update the property with a string representation of the new list value.
 >  - If you need to filter on the list's contents during a traversal, you'll have to pull the list values out as properties on separate vertices. You can connect these list value vertices either directly to the 'parent' vertex, or to a 'list' vertex that is attached to the parent. You can then use additional properties, either on the edges or on the value vertices themselves, to store metadata, such as item order. While this solution allows for filters or predicates to be applied to list values during a traversal, it introduces more complexity into both the data model and the queries that apply these filters. It may also increase both query latencies and storage costs (every value has the storage overhead of its being a vertex).
 
+### When should I model an attribute as a property versus a label?
+
+Use a label to type a vertex or to describe the role a vertex plays in your dataset. Use properties to capture the instance-based attributes of a thing in your domain. Labels help answer the question: What does this vertex represent?. Properties help answer the question: What are the attributes of this particular thing?
+
 ### When should I model an attribute as a property and when should I pull it out into its own vertex?
 
 Model an attribute as its own vertex when:
 
  - the attribute value is a complex value type _and/or_
+ - the attribute value is part of a value structure, such as a hierarchy _and/or_
  - the attribute value will be used to relate entities at query time.
 
 #### Complex value types
@@ -72,6 +84,10 @@ Complex value types – attribute values that contain more than one field – 
 With some applications, you may want to attach metadata such as a timestamp or access control list to a specific attribute (rather than the vertex representing the entity to which the attribute belongs). If your graph database and its data model and query language support [metaproperties](https://kelvinlawrence.net/book/Gremlin-Graph-Guide.html#metaprop) then you can take advantage of these features to implement your use case. 
 
 > Neptune doesn't support metaproperties. To attach attribute-specific metadata, you will have to model the attribute as its own vertex, and add additional properties to this vertex (and/or to the edge connecting this attribute vertex to the entity with which it is associated) to represent your metadata.
+
+#### Value structures
+
+Some value types are part of a set that has its own internal structure. As an example, take the classification hierarchy in an online product catalogue. _Treasure Island_ might be classified as both 'Classic Children's Literature' and as 'Action and Adventure', both of which are subcategories of 'Fiction' in the 'Books' part of the catalogue. Such hierarchical or multi-hierarchical structures are best represented using the subgraph structures enabled by pulling each classification value out into its own vertex.
   
 #### Relating entities through their attributes at query time
 
@@ -90,3 +106,44 @@ _Find everyone who has used social security number '123-45-6789'._
 This latter query could be satisfied simply by filtering `User` vertices based on a `socialSecurityNumber` value that is known to us at the time the query is formulated. It's the equivalent of a simple key-value lookup. In the connected data query, in contrast, we don't necessarily know the social security number at query time. What we do know is how to identify person X. Having found person X, the connected data query then needs to find other people who are connected to X by way of some shared attribute – the social security number.
 
 If you are considering modelling an attribute as its own vertex in order to facilitate connected data queries, apply good judgement based on your understanding of the domain. The new vertex should probably represent a significant concept in the domain. In the fraud detection example, bits of identity information are meaningful domain entities that can exist independent of the users with which they are associated. In other domains, the same might not be true of these same attributes.
+
+## Edges
+
+> In RDF terms, both property names and vertex and edge labels are considered predicates. Neptune is optimized for datasets containing a relatively small number of unique predicates – in the order of several thousand at most. A dataset containing 100,000 `User` vertices, each with 5 properties, and 1 million `FOLLOWS` edges has 7 unique predicates (1 vertex label, 5 vertex properties, and 1 edge label).
+> 
+> Keep the number of predicates in your data model relatively small. Databases with many tens of thousands or even millions of unique predicates can experience a drop in performance.
+
+## The Hub-and-Spoke Pattern
+
+One of the most common patterns in property graph data modelling is the hub-and-spoke structure, comprising a central vertex connected to several neighbouring vertices. This central vertex often represents a fact or event, the neighbouring vertices contextual information that helps explain or enrich our understanding of this hub vertex. An example would be a `Purchase` hub vertex, representing a purchasing event, connected to the `User` who made the purchase, the several `Product` items in the user's shopping basket, and the `Shop` where the items were bought.
+
+The hub-and-spoke subgraph structure is similar to the star schema or facts and dimensions model employed in data warehousing. Each hub node represents an instance of a fact or event (or other entity). A hub vertex is connected to one or more spoke or dimension vertices. These dimension vertices in turn are often connected to multiple fact vertices: a `User` makes many purchases; a `Product` appears in multiple shopping baskets. The subgraph structure may occur thousands or millions of times in a dataset, with the dimension vertices acting as contextual intermediaries through which facts or events can be related.
+
+Sometimes this pattern will emerge as a straightforward representation of your domain. At other times, you may find yourself moving to this pattern to accomodate several different use cases and the queries associated with them, or to provide for the longterm evolvability of your model. Your overall goal is to design an application graph data model that is expressive of your domain, easy to query on behalf of your most important use cases, and easy to evolve as you discover new use cases and introduce new features into your application. If your data model is too simple, it may become difficult to add new use cases and queries. If it is too complex, it may become difficult to maintain, and may impose a performance penalty of some of your more important queries. Aim to be as simple as you can given the needs of your application, and no simpler.
+
+Consider how we might represent a person's employment details in an application graph data model. If all we need to know, given our current and anticipated new use cases, is which company a person currently works for, the following may suffice:
+
+TODO – image
+
+We can even add properties to the `WORKED_AT` edge to describe Alice's role, and the period during which she worked for Example Corp (e.g. `from` and `to` properties, with data values).
+
+But if our application use cases require us to ask deeper questions of Alice's employment history – In which office was she located? How did her role relate to other roles in the company?– then we'd likely adopt a more complex model based on the hub-and-spoke pattern:
+
+TODO – image
+
+Here we've taken the action encoded in the `WORKED_AT` edge ('working' or 'worked', a verb) and turned it into a vertex labelled `Job` (a noun) that acts as a hub connected by way of `HAS_JOB` and `AT_COMPANY` edges to the vertices representing Alice and Example Corp. You'll find that most edges can be decomposed in this way into a more complex vertex-and-two-edges structure. The trick is in identifying when this is _necessary_.
+
+The advantage of this model is that it allows for the longterm evolvability of your application. You can always add new types of dimension nodes as you learn more about your domain and introduce new features. If a new use case emerges that requires us to capture details of the department to which Alice belonged (an organisational hierarchy worthy of its own subgraph structure), for example, we can easily add a new `Department` vertex to the model:
+
+TODO – image
+
+### When to use hub-and-spoke
+
+It's tempting to apply this pattern everywhere, transforming every edge in your 'naive' model into a vertex-and-two-edges structure. But if you don't need the richness and flexibility of this subgraph structure, don't use it: you'll end up increasing storage overheads and query latencies (more data to store, fetch and traverse) for no appreciable benefit.
+
+Conversely, you may be struggling with an overly simplistic model derived from your first natural language description of your domain. Problems often present themselves when you find yourself wanting to add an edge to an edge – to annotate one relationship with another. This can sometimes be the result of _verbing_ – the language habit whereby a noun is transformed into a verb. For example, instead of saying X `SENT` an `Email` `TO` Y, we might verb the noun, and say X `EMAILED` Y. If this is the basis of our model, problems can emereg when we want to indicate who was CCd on the mail, of describe one email as being a rely to another. By pulling out the domain entity inherent in the verb – `Email` from `EMAILED` – we can introduce a hub node that allows for far more expressive structuring of entities and relationships.
+
+If you're struggling to come up with a graph structure that captures the complex interdependencies between several things in your domain, look for the nouns, and hence the domain concepts, hidden inside of some of the verb phrases you've used to describe the structuring of your domain. 
+
+While some hub vertices lie hidden in verbs, other hub-and-spoke structures can be found in adverbial phrases – those additional parts of a sentence that describe how, when or where an action was performed. Adverbial phrases result in what entity-relational modelling calls n-ary relationships; that is, complex, multi-dimensional relationships that bind together several things and concepts. The hub-and-spoke pattern is ideal for these kinds of n-ary relationships. While it may sometimes feel as though you're encumbering your model with another vertex just to accomodate the need for multiple relationships, you can invariably find a good, domain-meaningful term for this hub vertex that helps make the model more expressive. 
+
