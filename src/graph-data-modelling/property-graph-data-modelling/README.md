@@ -1,6 +1,6 @@
 # Property Graph Data Modelling
 
-  - [An Application Graph Data Model](#an-application-graph-data-model)
+  - [Building An Application Graph Data Model](#building-an-application-graph-data-model)
   - [Vertices](#vertices)
     - [Vertex IDs](#vertex-ids)
     - [Vertex labels](#vertex-labels)
@@ -18,7 +18,7 @@
     - [Hub-and-spoke example](#hub-and-spoke-example)
     - [When to use hub-and-spoke](#when-to-use-hub-and-spoke)
 
-## An Application Graph Data Model
+## Building An Application Graph Data Model
 
 An application-specific property graph data model describes how your graph data is structured to express your domain and make it easy and efficient to query for your most important use cases: 
 

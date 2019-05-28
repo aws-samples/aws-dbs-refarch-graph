@@ -28,7 +28,7 @@ Think of your application graph model and your queries as being two sides of the
   
 ## Using Edges to Facilitate Efficient Graph Queries
 
-The performance of a graph query depend on how much of the graph the query has to 'touch' in order to generate a set of results. The larger the working set, the longer it will take to get from storage and then traverse once it has been cached in main memory.
+The performance of a graph query depends on how much of the graph the query has to 'touch' in order to generate a set of results. The larger the working set, the longer it will take to get from storage and then traverse once it has been cached in main memory.
 
 ![Large Query](large-query.png)
 
@@ -36,7 +36,7 @@ You can ensure your queries touch the minimum amount of data by naming edges and
 
 ![Small Query](small-query.png)
 
-Edges and predicates compose and partition the graph. By connecting vertices, they structure the whole, creating a complex composite from what would otherwise be simple islands of data. At the same time they serve to partition the graph, differentiating connections between elements based on name, direction and property values so that queries can identity specific subgraphs within a larger, more generally connected structure. By focussing your queries on certain predicates or edge labels and directions, and the paths they form, you allow the query engine to exclude irrelevant parts of the graph from consideration, effectively materializing a particular view of the graph dedicated to addressing a specific query need.
+Edges and predicates compose and partition the graph. By connecting vertices, they structure the whole, creating a complex composite from what would otherwise be simple islands of data. At the same time they serve to partition the graph, differentiating connections between elements based on name, direction and property values so that queries can identity specific subgraphs within a larger, more variably connected structure. By focussing your queries on certain predicates or edge labels and directions, and the paths they form, you allow the query engine to exclude irrelevant parts of the graph from consideration, effectively materializing a particular view of the graph dedicated to addressing a specific query need.
 
 ### Edge Names
 
