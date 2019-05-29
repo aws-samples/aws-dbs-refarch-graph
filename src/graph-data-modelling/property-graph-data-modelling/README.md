@@ -13,10 +13,20 @@
   - [Edges](#edges)
     - [Edge IDs](#edge-ids)
     - [Edge labels](#edge-labels)
+      - [Bi-directional relationships](#bi-directional-relationships)
+      - [Uni-directional relationships](#uni-directional-relationships)
+      - [Multiple relationships between vertices](#multiple-relationships-between-vertices)
     - [Edge properties](#edge-properties)
   - [The Hub-and-Spoke Pattern](#the-hub-and-spoke-pattern)
     - [Hub-and-spoke example](#hub-and-spoke-example)
     - [When to use hub-and-spoke](#when-to-use-hub-and-spoke)
+    
+    
+### Learn More
+
+  * For a worked example of deriving a property graph model from a set of use cases, see the [Property Graph Data Modelling](https://github.com/aws-samples/amazon-neptune-samples/tree/master/gremlin/property-graph-data-modelling) sample
+  * For guidance on converting a relational, key-value or document data model to a propery graph model, see [Converting Other Data Models to a Graph Model](./../../converting-to-graph)
+
 
 ## Building An Application Graph Data Model
 
@@ -111,6 +121,77 @@ If you are considering modelling an attribute as its own vertex in order to faci
 
 ## Edges
 
+Use edges to represent the relationships between things in your domain. 
+
+The performance of a graph query depends on how much of the graph the query has to 'touch' in order to generate a set of results. The larger the working set, the longer it will take to get from storage and then traverse once it has been cached in main memory.
+
+![Large Query](large-query.png)
+
+You can ensure your queries touch the minimum amount of data by naming edges in a way that allows the query engine to follow only those relationships relevant to the query being executed. 
+
+![Small Query](small-query.png)
+
+Edges compose and partition the graph. By connecting vertices, they structure the whole, creating a complex composite from what would otherwise be simple islands of data. At the same time they serve to partition the graph, differentiating connections between elements based on name, direction and property values so that queries can identity specific subgraphs within a larger, more variably connected structure. By focussing your queries on certain edge labels and directions, and the paths they form, you allow the query engine to exclude irrelevant parts of the graph from consideration, effectively materializing a particular view of the graph dedicated to addressing a specific query need.
+
+### Edge IDs
+
+Every edge has an ID. Some graph databases automatically assign IDs to edges when they are created, others allow you to supply your own. Because every edge has its own identity, the property graph allows you to create multiple edges with the same labels (and properties) between any given pair of vertices.
+
+> Neptune allows you to supply your own IDs when you create an edge. If you don't supply an ID, Neptune will create a string-based UUID for you.
+
+### Edge labels
+
+Derive your edge labels from your use cases. Doing so helps structure and partition your data so that queries ignore vertices and edges that have no bearing on the working set necessary to satisfy the query.
+
+![Edge Labels](edge-labels.png)
+
+If your queries need only find relationships with a particular name drawn from a family of names (for example, of all the addresses in the dataset, one query needs only find work addresses, another only home addresses), then consider using fine-grained edge labels or predicates.
+
+If some or all of your queries need to find all relationships belonging to a particular family (for example, all addresses, irrespective of whether they are work or home addresses), use a more general name qualified with an edge property. The tradeoff here is that queries that require only specific relationship types (for example, work addresses) will touch more of the graph and will have to filter based on the edge property, but the design provides for both finding all edges with a particular name, and finding specific types of edges belonging to that family.
+
+#### Bi-directional relationships
+
+If you need to model bi-directional relationships, in which relationship direction is of no consequence to the model, you can use a single, directed relationship, but ignore its direction in your Gremlin queries using the `both()` or `bothE()` steps.
+
+![Bi-Directional Relationships](bi-directional-relationships.png)
+
+Here's an example query that ignores edge direction:
+
+```
+g.V('p-1').both('WORKS_WITH')
+```
+
+#### Uni-directional relationships
+
+Edges in a property graph are always directed: ideal for expressing uni-directional relationships.
+
+![Unit-Directional Relationships](uni-directional-relationships.png)
+
+In Gremlin you then explicitly state the direction you wish to follow in your queries using the `in()`, `out()`, `inE()` and `outE()` steps:
+
+```
+g.V('p-1').in('FOLLOWS')
+```
+
+or
+
+```
+g.V('p-1').out('FOLLOWS')
+```
+
+#### Multiple relationships between vertices
+
+You can connect any pair of vertices with multiple edges. These edges can all have hte same name, or they can have different names. Each edge represents an instance of a connection between the start and end vertices. In many cases, such edges will be attributed with one or more distinguishing properties, such as timestamps. 
+
+![Multiple Relationships](multiple-relationships.png)
+
+### Edge properties
+
+Use edge properties to represent the strength, weight or quality of a relationship. Using edge properties, you can further filter which edges a traversal follows – following only `KNOWS` edges in a social graph whose `strength` property is greater than 5, for example – or compute a cumulative result along a path – calculting the shortest, or cheapest, or quickest route through a logistics network, for example.
+
+You can also use edge properties to store metadata such as a version number, last updated timestamp, or access control list.
+
+> ### A note on predicates
 > In RDF terms, both property names and vertex and edge labels are considered predicates. Neptune is optimized for datasets containing a relatively small number of unique predicates – in the order of several thousand at most. A dataset containing 100,000 `User` vertices, each with 5 properties, and 1 million `FOLLOWS` edges has 7 unique predicates (1 vertex label, 5 vertex properties, and 1 edge label).
 > 
 > Keep the number of predicates in your data model relatively small. Databases with many tens of thousands or even millions of unique predicates can experience a drop in performance.
