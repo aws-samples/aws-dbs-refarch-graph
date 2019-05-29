@@ -1,6 +1,6 @@
 # Property Graph Data Modelling
 
-  - [Building An Application Graph Data Model](#building-an-application-graph-data-model)
+  - [Building an Application Graph Data Model](#building-an-application-graph-data-model)
   - [Vertices](#vertices)
     - [Vertex IDs](#vertex-ids)
     - [Vertex labels](#vertex-labels)
@@ -28,7 +28,7 @@
   * For guidance on converting a relational, key-value or document data model to a propery graph model, see [Converting Other Data Models to a Graph Model](./../../converting-to-graph)
 
 
-## Building An Application Graph Data Model
+## Building an Application Graph Data Model
 
 An application-specific property graph data model describes how your graph data is structured to express your domain and make it easy and efficient to query for your most important use cases: 
 
