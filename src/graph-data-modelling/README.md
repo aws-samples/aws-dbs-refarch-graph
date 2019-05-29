@@ -24,6 +24,6 @@ Think of your application graph model and your queries as being two sides of the
 
 ### Learn More
 
-  * For guidance on creating a property graph data model, see [Property Graph Data Modelling](/property-graph-data-modelling)
+  * For guidance on creating a property graph data model, see [Property Graph Data Modelling](./property-graph-data-modelling)
   * For a worked example of deriving a property graph model from a set of use cases, see the [Property Graph Data Modelling](https://github.com/aws-samples/amazon-neptune-samples/tree/master/gremlin/property-graph-data-modelling) sample
-  * For guidance on converting a relational, key-value or document data model to a propery graph model, see [Converting Other Data Models to a Graph Model](./../converting-to-graph)
+  * For guidance on converting a relational, key-value or document data model to a property graph model, see [Converting Other Data Models to a Graph Model](./../converting-to-graph)
