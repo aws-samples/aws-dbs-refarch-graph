@@ -211,21 +211,23 @@ Sometimes this pattern will emerge as a straightforward representation of your d
 
 ### Hub-and-spoke example
 
-Consider how we might represent a person's employment details in an application graph data model. If all we need to know, given our current and anticipated new use cases, is which company a person currently works for, the following will suffice:
+Consider how we might represent a person's employment details in an application graph data model. If all we need to know, given our current and anticipated new use cases, is the company where a person worked, the following will suffice:
 
-TODO – image
+![Simple model 1](hub-and-spoke-1.png)
 
 We can even add properties to the `WORKED_AT` edge to describe Alice's role, and the period during which she worked for Example Corp (e.g. `from` and `to` properties, with data values).
 
+![Simple model 2](hub-and-spoke-2.png)
+
 But if our application use cases require us to ask deeper questions of Alice's employment history – In which office was she located? How did her role relate to other roles in the company? – then we'll need to adopt a more complex model based on the hub-and-spoke pattern:
 
-TODO – image
+![Hub-and-spoke 1](hub-and-spoke-3.png)
 
 Here we've taken the action encoded in the `WORKED_AT` edge ('working' or 'worked', a verb) and turned it into a vertex labelled `Job` (a noun) that acts as a hub connected by way of `HAS_JOB` and `AT_COMPANY` edges to the vertices representing Alice and Example Corp. You'll find that most edges can be decomposed in this way into a more complex vertex-and-two-edges structure. The trick is in identifying when this is _necessary_.
 
 The advantage of this model is that it allows for the longterm evolvability of your application. You can always add new types of dimension nodes as you learn more about your domain and introduce new features. If a new use case emerges that requires us to capture details of the department to which Alice belonged (an organisational hierarchy worthy of its own subgraph structure), for example, we can easily add a new `Department` vertex to the model:
 
-TODO – image
+![Hub-and-spoke 2](hub-and-spoke-4.png)
 
 ### When to use hub-and-spoke
 
