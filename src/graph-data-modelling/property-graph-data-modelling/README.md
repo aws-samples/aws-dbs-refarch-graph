@@ -181,7 +181,8 @@ g.V('p-1').out('FOLLOWS')
 
 > ### Favour outgoing edges
 > Neptune is optimized for traversing outgoing edges. Therefore, if possible, design your model so that your performance-critical queries follow mostly outgoing edges.
-> If a query has to traverse an incoming edge, always specify the edge label as part of the query, even if there is only one type of edge label that the traversal could possibly follow. If, for example, a given vertex has only `CREATED` incoming edges, we would recommend using `in('CREATED')` and `inE('CREATED')` rather than `in()` and `inE()` to traverse those edges.
+>
+> If a query has to traverse an incoming edge, always specify the edge label as part of the query, even if there is only one type of edge label that the traversal could possibly follow. For example, for a vertex that has only `CREATED` incoming edges, we would recommend using `in('CREATED')` and `inE('CREATED')` rather than `in()` and `inE()` to traverse those edges.
 
 #### Multiple relationships between vertices
 
@@ -191,7 +192,7 @@ You can connect any pair of vertices with multiple edges. These edges can all ha
 
 ### Edge properties
 
-Use edge properties to represent the strength, weight or quality of a relationship. Using edge properties, you can further filter which edges a traversal follows – following only `KNOWS` edges in a social graph whose `strength` property is greater than 5, for example – or compute a cumulative result along a path – calculting the shortest, or cheapest, or quickest route through a logistics network, for example.
+Use edge properties to represent the strength, weight or quality of a relationship. Using edge properties, you can further filter which edges a traversal follows – following only `KNOWS` edges in a social graph whose `strength` property is greater than 5, for example – or compute a cumulative result along a path – calculating the shortest, or cheapest, or quickest route through a logistics network, for example.
 
 You can also use edge properties to store metadata such as a version number, last updated timestamp, or access control list.
 
