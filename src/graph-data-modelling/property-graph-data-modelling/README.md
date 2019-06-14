@@ -197,7 +197,7 @@ Use edge properties to represent the strength, weight or quality of a relationsh
 You can also use edge properties to store metadata such as a version number, last updated timestamp, or access control list.
 
 > ### A note on predicates
-> In RDF terms, both property names and vertex and edge labels are considered predicates. Neptune is optimized for datasets containing a relatively small number of unique predicates – in the order of several thousand at most. A dataset containing 100,000 `User` vertices, each with 5 properties, and 1 million `FOLLOWS` edges has 7 unique predicates (1 vertex label, 5 vertex properties, and 1 edge label).
+> In RDF terms, both edge labels and edge and vertex property names are considered predicates. Neptune is optimized for datasets containing a relatively small number of unique predicates – in the order of several thousand at most. A dataset containing 100,000 `User` vertices, each with 5 properties, and 1 million `FOLLOWS` edges has 6 unique predicates (5 vertex properties and 1 edge label).
 > 
 > Keep the number of predicates in your data model relatively small. Databases with many tens of thousands or even millions of unique predicates can experience a drop in performance.
 
@@ -215,7 +215,7 @@ Consider how we might represent a person's employment details in an application 
 
 ![Simple model 1](hub-and-spoke-1.png)
 
-We can even add properties to the `WORKED_AT` edge to describe Alice's role, and the period during which she worked for Example Corp (e.g. `from` and `to` properties, with data values).
+We can even add properties to the `WORKED_AT` edge to describe Alice's role, and the period during which she worked for Example Corp (e.g. `from` and `to` properties, with data values):
 
 ![Simple model 2](hub-and-spoke-2.png)
 
