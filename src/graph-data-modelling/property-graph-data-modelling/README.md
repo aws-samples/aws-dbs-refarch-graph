@@ -107,7 +107,7 @@ If an attribute value will be used to create paths through the network that rela
 
 _Social security number_ is a good example. Normally, we'd model social security number by attaching a `socialSecurityNumber` property to a `User` vertex. But in a fraud detection graph, where individuals in a fraud ring share bits of identity information, things are more complicated. Here we might have a connected data query of the form: 
 
-_Given individual X, can we find other people in the graph who have opened accounts using the same security number as person X?_ 
+_Given individual X, can we find other people in the graph who have opened accounts using the same social security number as person X?_ 
 
 In other words, we have a starting point, person X, but need thereafter to find other people who have something in common with person X based on a specific attribute – the social security number used by person X. 
 
