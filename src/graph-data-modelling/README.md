@@ -63,7 +63,7 @@ Think of your application graph model and your queries as being two sides of the
 
 ## Building an Application Graph Data Model
 
-An application-specific property graph data model describes how your graph data is structured to express your domain and make it easy and efficient to query for your most important use cases: 
+An application-specific property graph data model describes how your graph data is structured both to express your domain and to make it easy and efficient to query for your most important use cases: 
 
   - What types of vertices do you have in your graph, as represented by vertex labels? 
   - What properties are attached to each type of vertex? 
@@ -80,11 +80,11 @@ In the relational world we'd express an application-specific relational model us
 >  - Every edge must have a start vertex and an end vertex. These can be the same vertex: that is, Neptune allows self edges.
 >  - All vertex IDs must be unique, and all edge IDs must be unique. However, Neptune does allow a vertex and an edge to have the same ID.
 
-You can use traditional data and application modelling techniques, including entity relationship diagrams (ERD) and the Unified Modelling Language (UML) to model your graph, but many graph application designs begin by illustrating a small, representative example of the graph, with specific vertices, labels, properties and edges showing how instances of things in the application domain are attributed and connected to one another. These _specifications by example_ can then be easily turned into representative datasets against which you can develop and test your queries. 
+You can use traditional data and application modelling techniques, including entity relationship diagrams (ERD) and the Unified Modelling Language (UML) to model your graph, but many graph application designs begin by illustrating a small, representative example of the graph, with specific vertices, labels, properties and edges showing how _instances_ of things in the application domain are attributed and connected to one another. These _specifications by example_ can then be easily turned into representative datasets against which you can develop and test your queries. 
 
 ## Vertices
 
-Use vertices to represent instances of a thing (an entity, concept, event, etc). You can think of a vertex as being roughly equivalent to a row in a relational table.
+Use vertices to represent instances of a thing (an entity, concept, event, etc). You can think of a vertex as being equivalent to a row in a relational table.
 
 ### Vertex IDs
 
@@ -94,7 +94,7 @@ Some graph databases automatically assign IDs to vertices when they are created,
 
 ### Vertex labels
 
-Use a vertex label to indicate the entity type or the role that the vertex plays in your dataset. _People, users, customers, products, jobs, policies_: in the singular, _person, user, customer, product, job_ and _policy_ – all good candidate vertex labels.
+Use a vertex label to indicate the entity type or the role that the vertex plays in your dataset. _People, users, customers, products, jobs, policies_ – in the singular, _person, user, customer, product, job_ and _policy_: all good candidate vertex labels.
 
 Try to limit each vertex to having just one label. Entities can sometimes play multiple roles in your dataset: if that's the case, it's fine to attach multiple labels to a vertex. But avoid using labels as flags or enumerated tags that group entities of a particular type. Better to use a property to perform this partitioning. For example, if you wanted to version vertices in your graph, it would be best to do this by attaching a `version` property containing a numeric property value to each vertex, rather than labelling each vertex `v1`, `v2`, `v3`, etc.
 
