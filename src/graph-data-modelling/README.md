@@ -33,6 +33,12 @@ Think of your application graph model and your queries as being two sides of the
   
 # Property Graph Data Modelling
 
+- [Graph Data Modelling](#graph-data-modelling)
+  - [Overview of the Design Process](#overview-of-the-design-process)
+    - [Best Practices](#best-practices)
+    - [Learn More](#learn-more)
+- [Property Graph Data Modelling](#property-graph-data-modelling)
+    - [Learn More](#learn-more-1)
   - [Building an Application Graph Data Model](#building-an-application-graph-data-model)
   - [Vertices](#vertices)
     - [Vertex IDs](#vertex-ids)
@@ -53,6 +59,27 @@ Think of your application graph model and your queries as being two sides of the
   - [The Hub-and-Spoke Pattern](#the-hub-and-spoke-pattern)
     - [Hub-and-spoke example](#hub-and-spoke-example)
     - [When to use hub-and-spoke](#when-to-use-hub-and-spoke)
+- [RDF Data Modelling](#rdf-data-modelling)
+  - [The Graph Development Lifecycle](#the-graph-development-lifecycle)
+    - [Introduction](#introduction)
+    - [Step 1: Describing new features](#step-1-describing-new-features)
+    - [Step 2: Designing the Ontology](#step-2-designing-the-ontology)
+    - [Step 3: Encoding the Ontology as data, in RDF (OWL)](#step-3-encoding-the-ontology-as-data-in-rdf-owl)
+    - [Step 4: Create instance data as RDF](#step-4-create-instance-data-as-rdf)
+    - [Step 5: Test your Feature with SPARQL](#step-5-test-your-feature-with-sparql)
+- [Graph Development Lifecycle Full Example Walkthough](#graph-development-lifecycle-full-example-walkthough)
+    - [Designing RDF Graph models (Ontologies)](#designing-rdf-graph-models-ontologies)
+  - [Example journey around the lifecycle (Iteration 1 - adding the first feature to the solution)](#example-journey-around-the-lifecycle-iteration-1---adding-the-first-feature-to-the-solution)
+    - [1. Describe new features](#1-describe-new-features)
+    - [2. Design the Ontology](#2-design-the-ontology)
+    - [3. Encode the ontology as RDF (OWL)](#3-encode-the-ontology-as-rdf-owl)
+- [Employee 1](#employee-1)
+- [Employee 3](#employee-3)
+- [Employee 4](#employee-4)
+- [Employee 5](#employee-5)
+- [Employee 6](#employee-6)
+- [Employee 7](#employee-7)
+    - [Multiple relationships between nodes](#multiple-relationships-between-nodes)
     
     
 ### Learn More
@@ -274,7 +301,585 @@ While some hub vertices lie hidden in verbs, other hub-and-spoke structures can 
 
 # RDF Data Modelling
 
-TODO
+- [RDF](#introduction-to-RDF)
+ - [RDF formats and syntax](#rdf-formats-and-syntax)
+ - [RDF Statements](#rdf-statements)
+ - [Subject, Predicates and Objects](#rdf-statements)
+   - [Datatype properties](#datatype-properties)
+   - [Object properties](#object-properties) 
+ - [Querying RDF with SPARQL](#querying-rdf-with-sparql) 
+ - [Namespaces and Prefixes](#namespaces-and-prefixes) 
+ - [Named Graphs](#named-graphs) 
+- [The Graph Development Lifecycle](#the-graph-development-lifecycle) 
+ - [Graph Deveopment Lifecycle Walkthough](#graph-development-lifecycle-example)
+
+- [Using Edges to Facilitate Efficient Graph Queries](#using-edges-to-facilitate-efficient-graph-queries)
+- [Predicate names](#predicate-names)
+- [Bi-directional relationships](#bi-directional-relationships)
+- [Uni-directional relationships](#uni-directional-relationships)
+- [Multiple relationships between nodes](#multiple-relationships-between-nodes)
+
+## The Graph Development Lifecycle
+
+### Introduction
+
+Designing, building and testing [RDF](https://en.wikipedia.org/wiki/Resource_Description_Framework) graph models is an iterative process, which we refer to here as The Graph Development Lifecycle. 
+The Graph Development Lifecycle starts by describing the features you want your graph to address in natural language, followed by a visual design, encoding the model as RDF using [OWL (Web Ontology Language)](https://www.wikipedia.org/wiki/Web_Ontology_Language), and then testing your ability do answer the features with some sample data and [SPARQL](https://en.wikipedia.org/wiki/SPARQL) queries.
+
+![Graph Development Lifecycle](rdf/rdf-graph-development-lifecycle.png)
+
+Here we descrie each step in the process, and below we give a full example of [iterating over the Graph Development Lifecycle multiple times.](#graph-deveopment-lifecycle-walkthough) 
+
+### Step 1: Describing new features
+
+Here we describe the features we want our graph to address, in plain natural language. 
+
+**Feature example:** *"In my social graph, I want to list all the people, by name, that are not my direct friends, but that are friends with my friends"*
+
+### Step 2: Designing the Ontology
+
+When we design a schema or logical model for RDF, we call it an Ontology. 
+Using the features described in natural language from Step 1, we  draw the model described by the features. We take all the concepts and relationships described as natural language and display them in an easy to digest diagram. Any diagramming tool is usually suitable, a whiteboard is ideal.
+
+### Step 3: Encoding the Ontology as data, in RDF (OWL)
+
+Once you have designed an Ontology in step 2, we record the model as data, in the graph. The model we use to record the schema deifgnition is called [OWL (Web Ontology Language)](https://www.wikipedia.org/wiki/Web_Ontology_Language), and the data is recorded in RDF format. 
+
+This activity does not enforce a schema, but describe the model, and gives you the ability to query Ontology along side the actual data. Although it may look daunting at first, there are various tools available to help you with this process, and it is actually a pretty easy thing to do manually. We show a full example below.
+
+### Step 4: Create instance data as RDF
+
+Now that you have an Ontology defined, you can create or source some data to fit the Ontology, as you need some sample data to test whether your Feature can be satisfied. We call this the Instance data.
+The data is recored in RDF, and stored in the database alongside the OWL data.
+
+The distinction between Instance RDF data and Ontological RDF/OWL data is sometimes referred to as [Description Logic]. Where the Instance data is referred to as the [ABox](https://en.wikipedia.org/wiki/Abox), and the OWL data is referred to as the TBox. 
+
+**Example**
+
+	Tbox / Ontology:       Every employee is a person
+	
+	ABox / Instance data:  Bob is an employee
+
+  
+### Step 5: Test your Feature with SPARQL 
+
+Now you have some RDF instance data and your OWL Ontology, you can test whether or not you can satisfy your feature requirements by running SPARQL queries. 
+
+Once you have completed the cycle, if you can satisfy your feature request, you can consider this journey around the cycle complete. If you cannot satisfy the feature, you can start the cycle again from step 1/2, with the new knowledge you have learnt, and try again with a new model to satisfy your features requirements.
+
+We show a full example around the lifecycle below.
+
+# Graph Development Lifecycle Full Example Walkthough
+
+### Designing RDF Graph models (Ontologies)
+
+When designing a model for an RDF graph (or Ontology), first we describe in natural language the features that we want from our Ontology, then we design and document it, by drawing the concepts which your model describes, their properties, and the relationships between them; this process is called designing an Ontology. 
+
+You can design an Ontology simply by drawing it somewhere/anywhere. Ontologies can be drawn on paper, on a white board, or on any graphical design environment where you can draw concepts, relationships between concepts and properties of those concepts. There are third party tools that are dedicated to the design of Ontologies, but we will not describe them here, as they are not needed for this guide.
+
+Once designed, the Ontology can be stored as RDF in a graph database, and so can be queried like any other data. 
+Experienced Ontologists may often write Ontology RDF data (known as OWL), either by hand or using third party tooling, sometimes skipping some steps described here, but in this guide we describe a more complete and well documented process, as described in the diagram above.
+
+Below we iterate around the Graph Development Lifecycle 3 times, for three new features.
+
+## Example journey around the lifecycle (Iteration 1 - adding the first feature to the solution)
+
+### 1. Describe new features
+
+We descibe what we want to find out from the graph, in natural language.
+
+| Feature | Description | 
+|-|-|
+| 1 | I want to know which employees work for which departments in the ACME CORP |
+	
+### 2. Design the Ontology
+
+We draw concepts/objects such as ‘Department’ and ‘Employee’ in a different style to data properties such a string for a name, in order to differentiate between literal values of core data types and domain specific concepts.
+
+![Ontology 1](rdf/rdf-graph-development-lifecycle-1.png)
+
+### 3. Encode the ontology as RDF (OWL) 
+
+Here is a complete example of the Ontology RDF (OWL) to match the diagram from step 2. 
+The RDF shown here is in the format of [Turtle](https://www.w3.org/TR/turtle/), to load this data into Neptune, see the documentation on [Loading data into Amazon Neptune](https://docs.aws.amazon.com/neptune/latest/userguide/load-data.html).
+
+```
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix awso: <http://aws.amazon.com/ontology/> .
+
+awso:withinOrganisation rdf:type owl:ObjectProperty ;
+       rdfs:domain awso:Department ;
+       rdfs:range awso:Organisation ;
+       rdfs:label "within organisation" .
+
+awso:hasPositionIn rdf:type owl:ObjectProperty ;
+       rdfs:domain awso:Employee ;
+       rdfs:range awso:Department ;
+       rdfs:label "has a position within" .
+            
+awso:hasName rdf:type owl:DatatypeProperty ;
+       rdfs:domain awso:Organisation ;
+       rdfs:range xsd:string .
+
+awso:Department rdf:type owl:Class ;
+       rdfs:label "Department" .
+
+awso:Employee rdf:type owl:Class ;
+       rdfs:label "Employee" .
+
+awso:Organisation rdf:type owl:Class ;
+       rdfs:label "Organisation" .
+```				 
+
+### 4. Create instance data as RDF
+
+Create sample data, to be loaded into Neptune, which fits to the Ontology.
+We create RDF in the Turtle format that describes:
+
+* 6 Employees
+* 3 Departments
+* 2 Organisations
+* 6 statements showing which departments the employees work in
+* 3 statements showing which organisations the departments are in  
+
+```
+@prefix awso: <http://aws.amazon.com/ontology/> .
+@prefix awsr: <http://aws.amazon.com/resource#> .
+
+awsr:Employee2 a awso:Employee .
+awsr:Employee1 a awso:Employee .
+awsr:Employee3 a awso:Employee .
+awsr:Employee4 a awso:Employee .
+awsr:Employee5 a awso:Employee .
+awsr:Employee6 a awso:Employee .
+awsr:Employee7 a awso:Employee .
+
+awsr:Department1 a awso:Department .
+awsr:Department2 a awso:Department .
+awsr:Department3 a awso:Department .
+awsr:Department4 a awso:Department .
+                    
+awsr:Org1 a awso:Organisation ;
+					awso:hasName "ACME Corp" .                    
+awsr:Org2 a awso:Organisation ;
+					awso:hasName "NORMCO LTD" .
+                    
+awsr:Employee1 awso:hasPositionIn awsr:Department1 .
+awsr:Employee2 awso:hasPositionIn awsr:Department1 .
+awsr:Employee3 awso:hasPositionIn awsr:Department2 .
+awsr:Employee4 awso:hasPositionIn awsr:Department2 .
+awsr:Employee5 awso:hasPositionIn awsr:Department3 .
+awsr:Employee6 awso:hasPositionIn awsr:Department3 .
+awsr:Employee7 awso:hasPositionIn awsr:Department4 .
+   
+awsr:Department1 awso:withinOrganisation awsr:Org1 .
+awsr:Department2 awso:withinOrganisation awsr:Org1 .
+awsr:Department3 awso:withinOrganisation awsr:Org2 .
+awsr:Department4 awso:withinOrganisation awsr:Org2 .
+```
+### 5. Test features with SPARQL
+Write a SPARQL query which tests that our Feature meets the requirements. 
+
+| Feature | Description | 
+|-|-|
+| 1 | I want to know which employees work for which departments in the ACME CORP |
+
+```
+prefix awso: <http://aws.amazon.com/ontology/>
+prefix awsr: <http://aws.amazon.com/resource#>
+
+SELECT * WHERE {
+	 	?employee a awso:Employee .
+	 	?employee awso:hasPositionIn ?department . 
+	 	?department awso:withinOrganisation awsr:Org1 .
+}
+```
+The response to the query proves that our feature is satisfied, showing in a table a list of employees and the departments they work for, filtered by only one of the organisations. 
+
+| Employee	                               | Department                                 |
+| ---------------------------------------- | ------------------------------------------ |
+| http://aws.amazon.com/resource#Employee1 | http://aws.amazon.com/resource#Department1 |
+| http://aws.amazon.com/resource#Employee2 | http://aws.amazon.com/resource#Department1 |
+| http://aws.amazon.com/resource#Employee3 | http://aws.amazon.com/resource#Department2 |
+| http://aws.amazon.com/resource#Employee4 | http://aws.amazon.com/resource#Department2 |
+
+## Example journey around the lifecycle (Iteration 2 - adding a second feature)
+
+### 1. Descibe new Features
+
+| Feature | Description | 
+|-|-|
+| 1 | I want to know which employees work for which departments in the ACME CORP |
+| 2 | and I want to list all the names of the employees in the organisation ACME CORP |
+
+### 2. Design the Ontology
+
+We can now update our diagram to fulfil the requirement of the new feature, by adding the ‘has name’ property to the Employee.
+We re-use the same property “has name” that we first used for ‘Organisation’. This is because they are conceptually the same. 
+In other words, the following statement is true: “both Employees and Organisations have a name.”
+Because it is the same property conceptually and in reality, you can choose to visualise this in multiple ways. How you draw the diagram of the Ontology is up to you, here are 3 different approaches:
+
+#### Ontology design - option 1 (Replicate an element)
+
+Replicating the element 'has name' on the diagram gives a lot of flexibility when drawing the model, as you can position the elements anywhere near their respective domain. It does however mean that you have more elements on your diagram, so can use up more of the canvas available to you.
+
+![Replicate an element](rdf/rdf-graph-development-lifecycle-2-op-1.png)
+
+Ontology design - option 2 (Re-use the same element)
+
+Pointing the relationship 'has name' to teh same element means you use less of the canvas, but it may be more difficult to lay out and visualisae later on, especially if lots of entities have a name.
+
+![Re-se an element](rdf/rdf-graph-development-lifecycle-2-op-2.png)
+
+Ontology design - option 3 (split into two diagrams and replicate elements)
+
+Splitting the diagram into two, and duplicating the elements Employee and Organisation, means you can manage your canvases seperately, and allow for much more expansion later on, for example if every class 'has a name', the diagram will still be very easy to understand. However, this does mean maintaining multiple diagrams.
+
+![Re-se an element](rdf/rdf-graph-development-lifecycle-2-op-3.png)
+
+### 3. Encode the ontology as RDF (OWL) 
+
+We add the new entities to our OWL file in RDF Turtle format:  
+*(We predict that we will also want names for Departments, so we can load that too.)*
+
+You can write the same RDF to Neptune as many times as you want, you will never get duplicate statements. Understand an RDF graph as a SET of statemets.
+
+We add the following RDF/OWL into Neptune, which overwrites the previous definition of the 'has name' datatype property.
+
+```
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix awso: <http://aws.amazon.com/ontology/> .
+
+awso:hasName rdf:type owl:DatatypeProperty ;
+             rdfs:domain awso:Organisation ,
+                         awso:Employee ,
+                         awso:Department ;
+             rdfs:range xsd:string ;
+             rdfs:label "has name" .
+```
+
+
+### 4. Create instance data as RDF
+
+We already have 'has name' sample data for the Organisations, so we just add the missing sample RDF instance data: the 'has name' datatype properties for Employees and Departments.
+
+```
+@prefix awso: <http://aws.amazon.com/ontology/> .
+@prefix awsr: <http://aws.amazon.com/resource#> .
+    
+awsr:Employee1 awso:hasName "John Smith".
+awsr:Employee2 awso:hasName "Jane Doe".
+awsr:Employee3 awso:hasName "Mike Jones".
+awsr:Employee4 awso:hasName "Callum McAllister".
+awsr:Employee5 awso:hasName "Allison Hunter".
+awsr:Employee6 awso:hasName "Sanjay Singh".
+awsr:Employee7 awso:hasName "Lars Anderson".
+
+awsr:Department1 awso:hasName "Sales & Marketing".
+awsr:Department2 awso:hasName "I.T.".
+awsr:Department3 awso:hasName "Human Resources".
+awsr:Department4 awso:hasName "Information Technology".
+                    
+```
+
+### 5. Test features with SPARQL
+
+We write a new SPARQL query to satisfy both features
+
+| Feature | Description | 
+|-|-|
+| 1 | I want to know which employees work for which departments in the ACME CORP |
+| 2 | and I want to list all the names of the employees in the organisation ACME CORP |
+
+
+```
+prefix awso: <http://aws.amazon.com/ontology/>
+prefix awsr: <http://aws.amazon.com/resource#>
+
+SELECT ?employeeName ?departmentName ?orgName WHERE {
+    ?employee a awso:Employee ;
+         awso:hasName ?employeeName ;
+         awso:hasPositionIn ?department . 
+    ?department awso:withinOrganisation awsr:Org1 ;
+         awso:hasName ?departmentName .
+    awsr:Org1 awso:hasName ?orgName .
+}
+```
+
+The response to the query proves that both features are satisfied, showing in a table with a list of employees names and the departments they work for, filtered by only one of the organisations. Now that we have names for everything, we can use them.
+
+| employeeName	| departmentName	| orgName | 
+|-|-|-|
+| John Smith | Sales &  Marketing	| ACME Corp
+| Jane Doe | Sales & Marketing | ACME Corp
+| Mike Jones | I.T. | ACME Corp
+| Callum McAllister | I.T. | ACME Corp
+
+
+## Example journey around the lifecycle (Iteration 3 - reification)
+
+### 1. Descibe new Features
+
+We describe a third feature. 
+
+
+| Feature | Description | 
+|-|-|
+| 1 | I want to know which employees work for which departments in the ACME CORP |
+| 2 | and I want to list all the names of the employees in the organisation ACME CORP |
+| 3 | and I want to list all the workers that work in IT departments across all organisations |
+
+
+### 2. Design the Ontology
+
+This new third feature presents us with a problem. We cannot write a SPARQL query will collect together all the people that work in any IT department regardless of Organisation. You can see this within our existing Ontology diagram. 
+In the existing Ontology, we have different IT departments for different organisations. We do not have a way of recognising that they are both IT departments, but in different Organisations:
+
+![The existing model](rdf/rdf-graph-development-lifecycle-2-op-1.png)
+
+```
+...
+    awsr:Department2 a awso:Department ;
+                    awso:hasName "I.T.".
+    awsr:Department4 a awso:Department ;
+                    awso:hasName "Information Technology".
+...
+    awsr:Department2 awso:withinOrganisation awsr:Org1 .
+    awsr:Department4 awso:withinOrganisation awsr:Org2 .
+...
+```
+
+We need to expand the model to recognise that the departments are both the same kind of departments, but in different organisations. 
+To do this, we need to expand the relationship ‘has position in’. This process is called [Reification](https://en.wikipedia.org/wiki/Reification_(knowledge_representation)). 
+
+We start with the relationship ...
+
+![Before reification](rdf/rei-1.png)
+
+... and reify(expand) it, so that we can recognise when Employees work for the same Department, but in different Positions for different organisations. 
+
+![After reification](rdf/rei-2.png)
+
+Our new complete Ontology looks like this:
+
+![Complete Ontology diagram](rdf/rdf-graph-development-lifecycle-3.png)
+
+### 3. Encode the ontology as RDF (OWL) 
+
+Lots of our Ontology has changed after reification, so first we delete everything from before in a simple SPARQL clear-all query:
+
+```
+CLEAR ALL
+```
+
+...and we create a new complete RDF/OWL file and load it:
+
+```
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix awso: <http://aws.amazon.com/ontology/> .
+
+awso:hasPosition rdf:type owl:ObjectProperty ;
+         rdfs:domain awso:Employee ;
+         rdfs:range  awso:Position ;
+         rdfs:label  "has position" .
+         
+awso:withinOrganisation rdf:type owl:ObjectProperty ;
+         rdfs:domain awso:Department ;
+         rdfs:range  awso:Organisation ;
+         rdfs:label  "within organisation" .
+         
+awso:inDepartment rdf:type owl:ObjectProperty ;
+         rdfs:domain awso:Position ;
+         rdfs:range  awso:Department ;
+         rdfs:label  "for department" .
+            
+awso:hasName rdf:type owl:DatatypeProperty ;
+         rdfs:domain awso:Organisation ,
+                     awso:Department ,
+                     awso:Employee ,
+                     awso:Position ;
+         rdfs:range  xsd:string ;
+         rdfs:label  "has name" .
+
+awso:Department rdf:type owl:Class ;
+         rdfs:label  "Department" .
+         
+awso:Employee rdf:type owl:Class ;
+         rdfs:label  "Employee" .
+         
+awso:Organisation rdf:type owl:Class ;
+         rdfs:label  "Organisation" .
+         
+awso:Position rdf:type owl:Class ;
+         rdfs:label  "Position" .
+```
+
+### 4. Create instance data as RDF
+
+As we have started wit a new Ontology in step 3, and deleted everything, we load a full new sample RDF dataset.
+
+```
+@prefix awso: <http://aws.amazon.com/ontology/> .
+@prefix awsr: <http://aws.amazon.com/resource#> .
+ 
+awsr:Employee1 a awso:Employee ;
+               awso:hasName "John Smith".
+awsr:Employee2 a awso:Employee ;
+               awso:hasName "Jane Doe".
+awsr:Employee3 a awso:Employee ;
+               awso:hasName "Mike Jones".
+awsr:Employee4 a awso:Employee ;
+               awso:hasName "Callum McAllister".
+awsr:Employee5 a awso:Employee ;
+               awso:hasName "Allison Hunter".
+awsr:Employee6 a awso:Employee ;
+               awso:hasName "Sanjay Singh".
+awsr:Employee7 a awso:Employee ;
+               awso:hasName "Lars Anderson".
+
+awsr:Department1 a awso:Department ;
+                 awso:hasName "Sales & Marketing".
+awsr:Department2 a awso:Department ;
+                 awso:hasName "I.T.".
+awsr:Department3 a awso:Department ;
+                 awso:hasName "Human Resources".
+                    
+awsr:Org1 a awso:Organisation ;
+                 awso:hasName "ACME Corp" .
+awsr:Org2 a awso:Organisation ;
+                 awso:hasName "NORMCO LTD" .
+    
+# Employee 1
+awsr:Employee1  awso:hasPosition awsr:Pos1 .
+                awsr:Pos1 a awso:Position .
+                awsr:Pos1 awso:hasName "John Smith in Sales&Marketing for ACME Corp" .
+                awsr:Pos1 awso:inDepartment awsr:Department2 .
+                awsr:Pos1 awso:withinOrganisation awsr:Org1 .
+        
+    # Employee 2
+awsr:Employee2  awso:hasPosition awsr:Pos2 .
+                awsr:Pos2 a awso:Position .
+                awsr:Pos2 awso:hasName "Jane Doe in Sales&Marketing for ACME Corp" .
+                awsr:Pos2 awso:inDepartment awsr:Department1 .
+                awsr:Pos2 awso:withinOrganisation awsr:Org1 .
+        
+# Employee 3
+awsr:Employee3  awso:hasPosition awsr:Pos3 .
+                awsr:Pos3 a awso:Position .
+                awsr:Pos3 awso:hasName "Mike Jones in I.T. for ACME Corp" .
+                awsr:Pos3 awso:inDepartment awsr:Department2 .
+                awsr:Pos3 awso:withinOrganisation awsr:Org1 .
+        
+# Employee 4
+awsr:Employee4  awso:hasPosition awsr:Pos4 .
+                awsr:Pos4 a awso:Position .
+                awsr:Pos4 awso:hasName "Callum McAllister in I.T. for ACME Corp" .
+                awsr:Pos4 awso:inDepartment awsr:Department2 .
+                awsr:Pos4 awso:withinOrganisation awsr:Org1 .
+        
+# Employee 5
+awsr:Employee5  awso:hasPosition awsr:Pos5 .
+                awsr:Pos5 a awso:Position .
+                awsr:Pos5 awso:hasName "Allison Hunter in H.R. for ACME Corp" .
+                awsr:Pos5 awso:inDepartment awsr:Department3 .
+                awsr:Pos5 awso:withinOrganisation awsr:Org1 .
+        
+# Employee 6
+awsr:Employee6  awso:hasPosition awsr:Pos6 .
+                awsr:Pos6 a awso:Position .
+                awsr:Pos6 awso:hasName "Sanjay Singh in H.R. for ACME Corp" .
+                awsr:Pos6 awso:inDepartment awsr:Department3 .
+                awsr:Pos6 awso:withinOrganisation awsr:Org1 .
+        
+# Employee 7
+awsr:Employee7  awso:hasPosition awsr:Pos7 .
+                awsr:Pos7 a awso:Position .
+                awsr:Pos7 awso:hasName "Lars Anderson in I.T. for NORMCO LTD" .
+                awsr:Pos7 awso:inDepartment awsr:Department2 .
+                awsr:Pos7 awso:withinOrganisation awsr:Org2 .
+
+```
+
+### 5. Test features with SPARQL
+
+We write a new SPARQL query to satisfy all three features:
+
+| Feature | Description | 
+|-|-|
+| 1 | I want to know which employees work for which departments in the ACME CORP |
+| 2 | and I want to list all the names of the employees in the organisation ACME CORP |
+| 3 | and I want to list all the workers that work in IT departments across all organisations |
+
+```
+prefix awso: <http://aws.amazon.com/ontology/> 
+prefix awsr: <http://aws.amazon.com/resource#> 
+
+SELECT ?employeeName ?departmentName ?orgName WHERE {
+    
+    ?employee a awso:Employee ;
+         awso:hasName ?employeeName ;
+         awso:hasPosition/awso:inDepartment ?department ; 
+         awso:hasPosition/awso:withinOrganisation ?org . 
+    
+    ?department awso:hasName ?departmentName .
+    ?org awso:hasName ?orgName .
+         
+}
+```
+The result shows that we can now satisfy all three features, with the Department URI being the same for every employee that works in I.T.
+
+| employeeName | departmentName | orgName |
+|-|-|-|
+| John Smith | I.T. | ACME Corp |
+| Mike Jones | I.T. | ACME Corp |
+| Callum McAllister | I.T. | ACME Corp |
+| Jane Doe | Sales &  Marketing | ACME Corp |
+| Allison Hunter | Human Resources | ACME Corp |
+| Sanjay Singh | Human Resources | ACME Corp |
+| Lars Anderson | I.T. | NORMCO LTD |
+
+### Satisfy the features with seperate SPARQL queries
+
+you could also satisfy your features with seperate SPARQL queries.  
+For example, here is a SPARQL query designed to satisfy only Feature 3:
+
+| Feature | Description | 
+|-|-|
+| 3 | and I want to list all the workers that work in IT departments across all organisations |
+
+
+```
+prefix awso: <http://aws.amazon.com/ontology/> 
+prefix awsr: <http://aws.amazon.com/resource#> 
+
+SELECT ?employeeName ?orgName WHERE {
+    
+    BIND(<http://aws.amazon.com/resource#Department2> as ?ITDepartment)
+    
+    ?employee a awso:Employee ;
+         awso:hasName ?employeeName ;
+         awso:hasPosition/awso:inDepartment ?ITDepartment ; 
+         awso:hasPosition/awso:withinOrganisation ?org . 
+    
+    ?ITDepartment awso:hasName ?departmentName .
+    ?org awso:hasName ?orgName .
+         
+}
+```
+Take note of the 'BIND' variable in the query, which explicitly sets the Department to be I.T.
+| employeeName | orgName |
+|-|-|
+| John Smith | ACME Corp |
+| Mike Jones | ACME Corp |
+| Callum McAllister | ACME Corp |
+| Lars Anderson | NORMCO LTD |
+
 
 ## Using Edges to Facilitate Efficient Graph Queries
 
@@ -309,7 +914,7 @@ INSERT
 WHERE {}
 ```
 
-### Uni-Directional relationships
+### Uni-directional relationships
 
 The directed nature of edges naturally lends itself to expressing uni-directional relationships.
 
@@ -340,8 +945,3 @@ SELECT ?followers WHERE {
 With RDF you can connect any pair of nodes with multiple relationships with different names. Connecting a pair of nodes with multiple relationships with the same name is slightly more complicated. RDF does not have a concept of relationship identity that would serve to distinguish predicate instances. To connect a pair of nodes with multiple relationships with the same name you will have to introduce intermediate nodes, one per instance of the relationship.
 
 ![Multiple Relationships](multiple-relationships.png)
-
-
-
-
-
