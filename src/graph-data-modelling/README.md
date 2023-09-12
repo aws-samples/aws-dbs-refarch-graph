@@ -291,7 +291,7 @@ While some hub vertices lie hidden in verbs, other hub-and-spoke structures can 
   - [Iteration 2: adding a second feature](#iteration-2-adding-a-second-feature)
     - [Ontology design: Replicate an element](#ontology-design-option-1-replicate-an-element)
     - [Ontology design: Re-using elements](#ontology-design-option-2-re-using-elements)
-		- [Ontology design: Multiple diagrams and replicating elements](#ontology-design-option-3-multiple-diagrams-and-replicating-elements)
+    - [Ontology design: Multiple diagrams and replicating elements](#ontology-design-option-3-multiple-diagrams-and-replicating-elements)
   - [Iteration 3 : adding a breaking change](#iteration-3-adding-a-breaking-change)
     - [Reification](#reification)
     - [Testing features with multiple SPARQL queries](#testing-features-with-multiple-sparql-queries)
