@@ -287,14 +287,14 @@ While some hub vertices lie hidden in verbs, other hub-and-spoke structures can 
 	- [Step 5: Test features with SPARQL](#step-5-test-features-with-sparql)
 - [Graph Development Lifecycle Tutorial](#graph-development-lifecycle-tutorial)
 	- [Designing RDF Graph models (Ontologies)](#designing-rdf-graph-models-ontologies)
-	- [Iteration 1 : adding the first feature to the solution](#iteration-1-adding-the-first-feature-to-the-solution)
-	- [Iteration 2 : adding a second feature](#iteration-2-adding-a-second-feature)
-		- [Ontology design : Replicate an element](#ontology-design-option-1-replicate-an-element)
-		- [Ontology design : Re-using elements](#ontology-design-option-2-re-using-elements)
-		- [Ontology design : Multiple diagrams and replicating elements](#ontology-design-option-3-:-multiple-diagrams-and-replicating-elements)
-	- [Iteration 3 : adding a breaking change](#iteration-3-adding-a-breaking-change)
-		- [Reification](#reification)
-		- [Testing features with multiple SPARQL queries](#testing-features-with-multiple-sparql-queries)
+  - [Iteration 1: adding the first feature to the solution](#iteration-1-adding-the-first-feature-to-the-solution)
+  - [Iteration 2: adding a second feature](#iteration-2-adding-a-second-feature)
+    - [Ontology design: Replicate an element](#ontology-design-option-1-replicate-an-element)
+    - [Ontology design: Re-using elements](#ontology-design-option-2-re-using-elements)
+		- [Ontology design: Multiple diagrams and replicating elements](#ontology-design-option-3-multiple-diagrams-and-replicating-elements)
+  - [Iteration 3 : adding a breaking change](#iteration-3-adding-a-breaking-change)
+    - [Reification](#reification)
+    - [Testing features with multiple SPARQL queries](#testing-features-with-multiple-sparql-queries)
 - [Using Edges to Facilitate Efficient Graph Queries](#using-edges-to-facilitate-efficient-graph-queries)
 - [Predicate names](#predicate-names)
 - [Bi-directional relationships](#bi-directional-relationships)
@@ -341,7 +341,7 @@ The distinction between Instance RDF data and Ontological RDF/OWL data is someti
 | ABox (Instance data) | Bob is an employee |
 
   
-### Step 5: Test your Feature with SPARQL 
+### Step 5: Test features with SPARQL 
 
 Now you have some RDF instance data and your OWL Ontology, you can test whether or not you can satisfy your feature requirements by running SPARQL queries. 
 
@@ -362,7 +362,7 @@ Experienced Ontologists may often write Ontology RDF data (known as OWL), either
 
 Now we demonstrate iterating around the Graph Development Lifecycle 3 times, for three new features.
 
-## Iteration 1 : adding the first feature to the solution
+## Iteration 1: adding the first feature to the solution
 
 ### 1. Describe new features
 
@@ -485,7 +485,7 @@ The response to the query proves that our feature is satisfied, showing in a tab
 | http://aws.amazon.com/resource#Employee3 | http://aws.amazon.com/resource#Department2 |
 | http://aws.amazon.com/resource#Employee4 | http://aws.amazon.com/resource#Department2 |
 
-## Iteration 2 : adding a second feature
+## Iteration 2: adding a second feature
 
 ### 1. Descibe new Features
 
@@ -501,19 +501,19 @@ We re-use the same property “has name” that we first used for ‘Organisatio
 In other words, the following statement is true: “both Employees and Organisations have a name.”
 Because it is the same property conceptually and in reality, you can choose to visualise this in multiple ways. How you draw the diagram of the Ontology is up to you, here are 3 different approaches:
 
-#### Ontology design option 1 : Replicate an element
+#### Ontology design option 1: Replicate an element
 
 Replicating the element 'has name' on the diagram gives a lot of flexibility when drawing the model, as you can position the elements anywhere near their respective domain. It does however mean that you have more elements on your diagram, so can use up more of the canvas available to you.
 
 ![Replicate an element](rdf/rdf-graph-development-lifecycle-2-op-1.png)
 
-#### Ontology design option 2 : Re-using elements
+#### Ontology design option 2: Re-using elements
 
 Pointing the relationship 'has name' to teh same element means you use less of the canvas, but it may be more difficult to lay out and visualisae later on, especially if lots of entities have a name.
 
 ![Re-se an element](rdf/rdf-graph-development-lifecycle-2-op-2.png)
 
-#### Ontology design option 3 : Multiple diagrams and replicating elements
+#### Ontology design option 3: Multiple diagrams and replicating elements
 
 Splitting the diagram into two, and duplicating the elements Employee and Organisation, means you can manage your canvases seperately, and allow for much more expansion later on, for example if every class 'has a name', the diagram will still be very easy to understand. However, this does mean maintaining multiple diagrams.
 
@@ -600,7 +600,7 @@ The response to the query proves that both features are satisfied, showing in a 
 | Callum McAllister | I.T. | ACME Corp
 
 
-## Iteration 3 : adding a breaking change
+## Iteration 3: adding a breaking change
 
 ### 1. Descibe new Features
 
