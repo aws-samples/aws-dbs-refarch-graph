@@ -279,6 +279,15 @@ While some hub vertices lie hidden in verbs, other hub-and-spoke structures can 
 
 # RDF Data Modelling
 
+- [RDF](#introduction-to-RDF)
+ - [RDF formats and syntax](#rdf-formats-and-syntax)
+ - [RDF Statements](#rdf-statements)
+ - [Subject, Predicates and Objects](#rdf-statements)
+   - [Datatype properties](#datatype-properties)
+   - [Object properties](#object-properties) 
+ - [Querying RDF with SPARQL](#querying-rdf-with-sparql) 
+ - [Namespaces and Prefixes](#namespaces-and-prefixes) 
+ - [Named Graphs](#named-graphs) 
 - [The Graph Development Lifecycle](#the-graph-development-lifecycle) 
 	- [Step 1: Describing new features](#step-1-describing-new-features)
 	- [Step 2: Designing the Ontology](#step-2-designing-the-ontology)
