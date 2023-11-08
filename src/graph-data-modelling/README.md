@@ -224,7 +224,7 @@ g.V('p-1').out('FOLLOWS')
 
 #### Multiple relationships between vertices
 
-You can connect any pair of vertices with multiple edges. These edges can all have hte same name, or they can have different names. Each edge represents an instance of a connection between the start and end vertices. In many cases, such edges will be attributed with one or more distinguishing properties, such as timestamps. 
+You can connect any pair of vertices with multiple edges. These edges can all have the same name, or they can have different names. Each edge represents an instance of a connection between the start and end vertices. In many cases, such edges will be attributed with one or more distinguishing properties, such as timestamps. 
 
 ![Multiple Relationships](multiple-relationships.png)
 
