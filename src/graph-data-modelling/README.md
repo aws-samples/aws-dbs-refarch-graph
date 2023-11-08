@@ -310,7 +310,7 @@ The Graph Development Lifecycle starts by describing the features you want your 
 
 ![Graph Development Lifecycle](rdf/rdf-graph-development-lifecycle.png)
 
-Here we descrie each step in the process, and below we give a full example of [iterating over the Graph Development Lifecycle multiple times.](#graph-deveopment-lifecycle-walkthough) 
+Here we describe each step in the process, and below we give a full example of [iterating over the Graph Development Lifecycle multiple times.](#graph-deveopment-lifecycle-walkthough) 
 
 ### Step 1: Describing new features
 
@@ -320,21 +320,31 @@ Here we describe the features we want our graph to address, in plain natural lan
 
 ### Step 2: Designing the Ontology
 
-When we design a schema or logical model for RDF, we call it an Ontology. 
-Using the features described in natural language from Step 1, we  draw the model described by the features. We take all the concepts and relationships described as natural language and display them in an easy to digest diagram. Any diagramming tool is usually suitable, a whiteboard is ideal.
+The term "Ontology", originally used in the study of Metaphysiscs, is the philosophical study of being. It investigates what types of entities exist, how they are grouped into categories, and how they are related to one another on the most fundamental level. 
+When we design a schema or logical model for RDF, we call it an "Ontology".
+
+Visit Wikipedia to further understand the differences between the [philosophical definition of an Ontology](https://en.wikipedia.org/wiki/Ontology) and the [Information Science definition of an Ontology](https://en.wikipedia.org/wiki/Ontology_%28information_science%29). 
+
+Using the features described in natural language from Step 1, we draw the Ontology described by the features. We take all the concepts and relationships described as natural language and display them in an easy to digest diagram. Any diagramming tool is usually suitable, a whiteboard is ideal.
 
 ### Step 3: Encoding the Ontology as RDF-OWL
 
 Once you have designed an Ontology in step 2, we record the model as data, in the graph. The Ontology we use to record the schema definition is called [OWL (Web Ontology Language)](https://www.wikipedia.org/wiki/Web_Ontology_Language), it is encoded in RDF. 
 
-This activity does not enforce a schema, but describe the model, and gives you the ability to query the Ontology along side the actual data. Although it may look daunting at first, there are various tools available to help you with this process, and it is easy thing to do manually with practice. We show a full example below.
+This activity does not enforce a schema, but describe the Ontological model as data, and gives you the ability to query the Ontology along side the actual data. Although it may look daunting at first, there are various tools available to help you with this process, and it is easy thing to do manually with practice. We show a full example below.
+
+N.B. Designing and encoding an Ontology is not a requirement for an RDF database (like Amazon Neptune) to work. Some pactitioners do not design OR encode their Ontologies at all. It is, however, highly recommended, for the following reasons:
+
+* The ability to query the logical model, schema and entity definitions just like any other data.
+* Compatibility with tooling that understands the OWL standard
+* When creating Software componenets that use the graph, they can be engineered to understand the model, to, for example, dynamically create React componenets for specific types. 
 
 ### Step 4: Create instance data as RDF
 
 Now that you have an Ontology defined, you can create or source some data to fit the Ontology, as you need some sample data to test whether your Feature can be satisfied. We call this the Instance data.
 The data is recored in RDF, and stored in the database alongside the OWL data.
 
-The distinction between Instance RDF data and Ontological RDF/OWL data is sometimes referred to as [Description Logic](https://en.wikipedia.org/wiki/Description_logic). Where the instance data belongs in the [ABox](https://en.wikipedia.org/wiki/Abox)(assertional box), and the ONtology (OWL) data belonging in the TBox (terminological data). 
+The distinction between Instance RDF data and Ontological RDF/OWL data is sometimes referred to as [Description Logic](https://en.wikipedia.org/wiki/Description_logic). Where the instance data belongs in the [ABox](https://en.wikipedia.org/wiki/Abox)(assertional box), and the Ontology (OWL) data belonging in the [TBox](https://en.wikipedia.org/wiki/Tbox) (terminological data). 
 |||
 |-|-|
 | Tbox (Ontology) | Every employee is a person |
@@ -487,7 +497,7 @@ The response to the query proves that our feature is satisfied, showing in a tab
 
 ## Iteration 2: adding a second feature
 
-### 1. Descibe new Features
+### 1. Describe new Features
 
 | Feature | Description | 
 |-|-|
@@ -509,7 +519,7 @@ Replicating the element 'has name' on the diagram gives a lot of flexibility whe
 
 #### Ontology design option 2: Re-using elements
 
-Pointing the relationship 'has name' to teh same element means you use less of the canvas, but it may be more difficult to lay out and visualisae later on, especially if lots of entities have a name.
+Pointing the relationship 'has name' to the same element means you use less of the canvas, but it may be more difficult to lay out and visualisae later on, especially if lots of entities have a name.
 
 ![Re-se an element](rdf/rdf-graph-development-lifecycle-2-op-2.png)
 
@@ -828,7 +838,7 @@ The result shows that we can now satisfy all three features, with the Department
 
 ### Testing features with multiple SPARQL queries
 
-you could also satisfy your features with seperate SPARQL queries.  
+You could also satisfy your features with seperate SPARQL queries.  
 For example, here is a SPARQL query designed to satisfy only Feature 3:
 
 | Feature | Description | 
@@ -924,6 +934,6 @@ SELECT ?followers WHERE {
 
 ### Multiple relationships between nodes
 
-With RDF you can connect any pair of nodes with multiple relationships with different names. Connecting a pair of nodes with multiple relationships with the same name is slightly more complicated. RDF does not have a concept of relationship identity that would serve to distinguish predicate instances. To connect a pair of nodes with multiple relationships with the same name you will have to introduce intermediate nodes, one per instance of the relationship.
+With RDF you can connect any pair of nodes with multiple relationships with different names. Connecting a pair of nodes with multiple relationships with the same name is slightly more complicated. RDF does not have a concept of relationship identity that would serve to distinguish predicate instances. To connect a pair of nodes with multiple relationships with the same name you will have to introduce intermediate nodes, one per instance of the relationship. This is another example of [Reification](#reification).
 
 ![Multiple Relationships](multiple-relationships.png)
