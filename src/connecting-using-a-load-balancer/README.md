@@ -35,7 +35,7 @@ Amazon Neptune only allows connections from clients located in the same VPC as t
 
 You want to connect to your Neptune cluster from clients located outside the VPC in which you launched your Neptune cluster.
 
-Amazon Neptune only allows connections from clients located in the same VPC as the Neptune cluster. In this architecture, clients located outside the VPC connect to Neptune via a Network Load Balancer.
+Amazon Neptune only allows connections from clients located in the same VPC as the Neptune cluster. In this architecture, clients located outside the VPC connect to Neptune via an Application Load Balancer.
 
 
 ![Application Load Balancer](application-load-balancer.png)
